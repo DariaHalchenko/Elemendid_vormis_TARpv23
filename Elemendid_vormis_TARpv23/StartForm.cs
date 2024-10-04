@@ -2,16 +2,20 @@
 {
     public partial class StartForm : Form
     {
-        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut" };
+        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut", "Raadionupp", "Raadionupp1", "Tekstikast"};
+        List<string> rbtn_list = new List<string> { "Üks", "Kaks", "Kolm" };
         TreeView tree;
         Button btn;
         Label lbl;
         PictureBox pbox;
         CheckBox chk1, chk2;
+        RadioButton rbtn, rbtn1, rbtn2, rbtn3;
+        TextBox txt;
+        
         public StartForm()
         {
-            this.Height = 500;
-            this.Width = 700;
+            this.Height = 800;
+            this.Width = 900;
             this.Text = "Vorm elementidega";
             tree = new TreeView();
             tree.Dock = DockStyle.Left;
@@ -124,6 +128,97 @@
                 Controls.Add(chk1);
                 Controls.Add(chk2);
             }
+            else if(e.Node.Text =="Raadionupp")
+            {
+                rbtn1 = new RadioButton();
+                rbtn1.Checked = false;
+                rbtn1.Text = "TARpv23";
+                rbtn1.Location = new Point(150, 420);
+                rbtn1.CheckedChanged += Rbtnd_CheckedChanged;
+              
+                rbtn2 = new RadioButton();
+                rbtn2.Checked = false;
+                rbtn2.Text = "LOGITpv23";
+                rbtn2.Location = new Point(150, 440);
+                rbtn2.CheckedChanged += Rbtnd_CheckedChanged;
+
+                rbtn3 = new RadioButton();
+                rbtn3.Checked = false;
+                rbtn3.Text = "TITpv23";
+                rbtn3.Location = new Point(150, 460);
+                rbtn3.CheckedChanged += Rbtnd_CheckedChanged;
+
+                Controls.Add(rbtn1);
+                Controls.Add(rbtn2);
+                Controls.Add(rbtn3);
+            }
+            else if (e.Node.Text == "Raadionupp1")
+            {
+                int x = 20;
+                for (int i = 0; i<rbtn_list.Count; i++)
+                {
+                    rbtn = new RadioButton();
+                    rbtn.Checked = false;
+                    rbtn.Text = rbtn_list[i];
+                    rbtn.Height = x;
+                    x = x + 20;
+                    rbtn.Location = new Point(150, btn.Height + lbl.Height + pbox.Height + chk1.Height + chk2.Height + rbtn.Height);
+                    rbtn.CheckedChanged += new EventHandler(Btn_CheckedChanged);
+
+                    Controls.Add(rbtn);
+                }
+            }
+            else if (e.Node.Text == "Tekstikast")
+            {
+                txt = new TextBox();
+                txt.Location = new Point(150+btn.Width +10, btn.Height);
+                txt.Font = new Font("Arial", 30);
+                txt.Width = 200;
+                txt.TextChanged += Txt_TextChanged;
+                Controls.Add(txt);
+            }
+
+        }
+
+        private void Txt_TextChanged(object? sender, EventArgs e)
+        {
+            lbl.Text = txt.Text;
+        }
+
+        private void Btn_CheckedChanged(object? sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            lbl.Text = rb.Text;
+        }
+
+        private void Rbtnd_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (rbtn1.Checked)
+            {
+                this.BackColor = Color.AliceBlue;
+                this.ForeColor = Color.OrangeRed;
+                lbl.Font= new Font("Blackadder ITC", 30, FontStyle.Italic);
+                lbl.ForeColor= Color.PaleVioletRed;
+            }
+            else if (rbtn2.Checked)
+            {
+                this.BackColor = Color.MistyRose;
+                this.ForeColor = Color.PaleVioletRed;
+                lbl.Font = new Font("Arial Rounded MT Bold", 25, FontStyle.Italic);
+                lbl.ForeColor = Color.HotPink;
+            }
+            else if (rbtn3.Checked)
+            {
+                this.BackColor = Color.FloralWhite;
+                this.ForeColor = Color.OrangeRed;
+                lbl.Font = new Font("Bauhaus 93", 25, FontStyle.Underline);
+                lbl.ForeColor = Color.Orchid;
+            }
+            else
+            {
+                this.BackColor = Color.Black;
+                this.ForeColor = Color.OrangeRed;
+            }
 
         }
 
@@ -138,21 +233,24 @@
             }
             else if (chk1.Checked)
             {
+                
                 lbl.ForeColor = Color.YellowGreen;
                 lbl.BorderStyle = BorderStyle.Fixed3D;
                 pbox.BorderStyle = BorderStyle.None;
+                pbox.Image = Image.FromFile(@"..\..\..\lilla.jpg");
             }
             else if (chk2.Checked)
             {
-                lbl.ForeColor = Color.AliceBlue;
+                lbl.ForeColor = Color.Orchid;
                 pbox.BorderStyle = BorderStyle.Fixed3D;
                 lbl.BorderStyle = BorderStyle.None;
             }
             else
             {
-                lbl.ForeColor = Color.DarkSeaGreen;
+                lbl.ForeColor = Color.MediumBlue;
                 lbl.BorderStyle = BorderStyle.None;
                 pbox.BorderStyle = BorderStyle.None;
+                pbox.Image = Image.FromFile(@"..\..\..\roosa.jpg");
             }
         }
     }
