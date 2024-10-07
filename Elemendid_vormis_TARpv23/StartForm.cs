@@ -1,17 +1,23 @@
-﻿namespace Elemendid_vormis_TARpv23
+﻿using Microsoft.VisualBasic;
+using System.Data;
+
+namespace Elemendid_vormis_TARpv23
 {
     public partial class StartForm : Form
     {
-        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut", "Raadionupp", "Raadionupp1", "Tekstikast"};
+        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut", "Raadionupp", "Raadionupp1", "Tekstikast", "Loetelu", "Tabel", "Dialogaknad" };
         List<string> rbtn_list = new List<string> { "Üks", "Kaks", "Kolm" };
         TreeView tree;
         Button btn;
         Label lbl;
-        PictureBox pbox;
+        PictureBox pbox, pbox2;
         CheckBox chk1, chk2;
         RadioButton rbtn, rbtn1, rbtn2, rbtn3;
         TextBox txt;
-        
+        ListBox lb;
+        DataSet ds;
+        DataGridView dg;
+
         public StartForm()
         {
             this.Height = 800;
@@ -177,7 +183,65 @@
                 txt.TextChanged += Txt_TextChanged;
                 Controls.Add(txt);
             }
+            else if (e.Node.Text == "Loetelu")
+            {
+                lb = new ListBox();
+                foreach (string item in rbtn_list)
+                {
+                    lb.Items.Add(item);
+                }
+                lb.Height = 50;
+                lb.Location = new Point(160 + btn.Width + txt.Width, btn.Height);
+                lb.SelectedIndexChanged += Lb_SelectedIndexChanged;
+                Controls.Add(lb);
+            }
+            else if (e.Node.Text == "Tabel")
+            {
+                ds = new DataSet("XML file");
+                ds.ReadXml(@"..\..\..\menu.xml");
+                dg = new DataGridView();
+                dg.Location = new Point(155 + chk1.Width + 25, txt.Height + lbl.Height + 30);
+                dg.DataSource = ds;
+                dg.DataMember = "food";
+                dg.RowHeaderMouseClick += Dg_RowHeaderMouseClick;
+                Controls.Add(dg);
+            }
+            else if (e.Node.Text == "Dialogaknad")
+            {
+                MessageBox.Show("Dialoog", "See on lihtne aken"); 
+                var vastus = MessageBox.Show("Sisestame andmed", "Kas tahad InputBoxi kasutada?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (vastus == DialogResult.Yes)
+                {
+                    string text = Interaction.InputBox("Sisesta midagi siia", "andmete sisestamine"); MessageBox.Show("Oli sisestanud : " + text);
+                    Random random = new Random();
+                    DataRow dr = ds.Tables["food"].NewRow();
+                    dr["name"] = text;
+                    dr["price"]="$"+(random.NextSingle()*10).ToString();
+                    dr["description"] = "Väga maitsev ";
+                    dr["calories"] = random.Next(10, 100);
 
+                    ds.Tables["food"].Rows.Add(dr);
+                    if (ds==null) { return; }
+                    ds.WriteXml(@"..\..\..\menu.xml");
+                    MessageBox.Show("Oli sisestatud" + text);
+                }
+            }
+        }
+
+        private void Dg_RowHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e)
+        {
+            txt.Text = dg.Rows[e.RowIndex].Cells[0].Value.ToString() + " hind " + dg.Rows[e.RowIndex].Cells[1].Value.ToString();
+            
+        }
+
+        private void Lb_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            switch (lb.SelectedIndex)
+            {
+                case 0: tree.BackColor = Color.Sienna; break;
+                case 1: tree.BackColor = Color.Cyan; break;
+                case 2: tree.BackColor = Color.DarkOrchid; break;
+            }
         }
 
         private void Txt_TextChanged(object? sender, EventArgs e)
