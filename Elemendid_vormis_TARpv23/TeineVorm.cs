@@ -74,11 +74,12 @@ namespace Elemendid_vormis_TARpv23
             sap.Click += Sap_Click;
 
             // Lisa buttons to FlowLayoutPanel
-            flp.Controls.Add(close);
+            tlp.Controls.Add(flp);
             flp.Controls.Add(stbc);
             flp.Controls.Add(ctp);
             flp.Controls.Add(sap);
-            tlp.Controls.Add(flp);
+            flp.Controls.Add(close);
+            
 
             //  Lisa ColumnStyles
             tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15));
