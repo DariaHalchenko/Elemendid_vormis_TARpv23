@@ -46,7 +46,8 @@ namespace Elemendid_vormis_TARpv23
         int dividend;
         int divisor;
 
-
+        int timeLeft;
+        
         public KolmVorm(int w, int h)
         {
             this.Height = h;
@@ -188,6 +189,31 @@ namespace Elemendid_vormis_TARpv23
             divisionRight.Font = new Font("Arial", 18, FontStyle.Italic);
             divisionRight.Text = "?";
 
+            //Добавление "равно" в Label vordub и знаков при помощи цикла
+            for (int i = 0; i < 4; i++)
+            {
+                equals = new Label();
+                equals.AutoSize = false;
+                equals.Dock = DockStyle.Fill;
+                equals.TextAlign = ContentAlignment.MiddleCenter;
+                equals.Font = new Font("Calibri", 15, FontStyle.Regular);
+                equals.Text = actions [i];
+                
+                tlp.Controls.Add(equals);
+                tlp.SetCellPosition(equals, new TableLayoutPanelCellPosition(1, i));
+                
+                
+                signs = new Label();
+                signs.AutoSize = false;
+                signs.Dock = DockStyle.Fill;
+                signs.TextAlign = ContentAlignment.MiddleCenter;
+                signs.Font = new Font("Calibri", 20, FontStyle.Regular);
+                signs.Text = "=";
+                
+                tlp.Controls.Add(signs);
+                tlp.SetCellPosition(signs, new TableLayoutPanelCellPosition(3, i));
+            }
+
             tlp.Controls.Add(plusLeftLabel);
             tlp.SetCellPosition(plusLeftLabel, new TableLayoutPanelCellPosition(0, 0));
             tlp.Controls.Add(plusRightLabel);
@@ -232,7 +258,8 @@ namespace Elemendid_vormis_TARpv23
 
             //Timer
             timer = new System.Timers.Timer();
-            timer.Interval = 1000; 
+            timer.Interval = 1000;
+            timer.Tick += Timer_Tick;
             
 
             this.Controls.Add(start);
@@ -241,6 +268,33 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(flp);
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (CheckTheAnswer())
+            {
+                timer.Stop();
+                MessageBox.Show("Vastasite kõigile küsimustele õigesti!",
+                                "Palju õnne! :)");
+                start.Enabled = true;
+            }
+            else if (timeLeft > 0)
+            {
+                timeLeft = timeLeft - 1;
+                time.Text = timeLeft + " seconds";
+            }
+            else
+            {
+                timer.Stop();
+                time.Text = "Aeg on läbi!";
+                MessageBox.Show("Sa ei jõudnud aegade lõpuni:(", "Vabandust!");
+                numeric1.Value = addend1 + addend2;
+                numeric2.Value = minuend - subtrahend;
+                numeric3.Value = multiplicand * multiplier;
+                numeric4.Value = dividend / divisor;
+                start.Enabled = true;
+            }
+        }
+        
         private void Numeric4_Enter(object? sender, EventArgs e)
         {
             NumericUpDown answerBox = sender as NumericUpDown;
