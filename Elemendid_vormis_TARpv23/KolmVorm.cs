@@ -4,13 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace Elemendid_vormis_TARpv23
 {
@@ -236,6 +233,12 @@ namespace Elemendid_vormis_TARpv23
             //Timer
             timer = new System.Timers.Timer();
             timer.Interval = 1000; 
+            
+
+            this.Controls.Add(start);
+            this.Controls.Add(close);
+            this.Controls.Add(lbl);
+            this.Controls.Add(flp);
         }
 
         private void Numeric4_Enter(object? sender, EventArgs e)
@@ -308,21 +311,21 @@ namespace Elemendid_vormis_TARpv23
             // 'sum' is the name of the NumericUpDown control.
             // This step makes sure its value is zero before
             // adding any values to it.
-            sum.Value = 0;
+            numeric1.Value = 0;
 
             // Fill in the subtraction problem.
             minuend = random.Next(1, 101);
             subtrahend = random.Next(1, minuend);
             minusLeftLabel.Text = minuend.ToString();
             minusRightLabel.Text = subtrahend.ToString();
-            divisionLeft.Value = 0;
+            numeric2.Value = 0;
 
             // Fill in the multiplication problem.
             multiplicand = random.Next(2, 11);
             multiplier = random.Next(2, 11);
             multiplicationLeft.Text = multiplicand.ToString();
             multiplicationRight.Text = multiplier.ToString();
-            product.Value = 0;
+            numeric3.Value = 0;
 
             // Fill in the division problem.
             divisor = random.Next(2, 11);
@@ -330,10 +333,10 @@ namespace Elemendid_vormis_TARpv23
             dividend = divisor * temporaryQuotient;
             divisionLeft.Text = dividend.ToString();
             divisionRight.Text = divisor.ToString();
-            quotient.Value = 0;
+            numeric4.Value = 0;
 
             // Start the timer.
-            timer = 30;
+            timeLeft = 30;
             lbl.Text = "30 seconds";
             timer.Start();
         }
