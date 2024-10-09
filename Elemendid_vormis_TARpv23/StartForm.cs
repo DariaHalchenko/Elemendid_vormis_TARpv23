@@ -5,10 +5,10 @@ namespace Elemendid_vormis_TARpv23
 {
     public partial class StartForm : Form
     {
-        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut", "Raadionupp", "Raadionupp1", "Tekstikast", "Loetelu", "Tabel", "Dialogaknad" };
+        List<string> elemendid = new List<string> { "Nupp", "Silt", "Pilt", "Märkruut", "Raadionupp", "Raadionupp1", "Tekstikast", "Loetelu", "Tabel", "Dialogaknad", "Picture Viewer", "Math Quiz", "Matching Game" };
         List<string> rbtn_list = new List<string> { "Üks", "Kaks", "Kolm" };
         TreeView tree;
-        Button btn;
+        Button btn, btn1, btn2, btn3;
         Label lbl;
         PictureBox pbox, pbox2;
         CheckBox chk1, chk2;
@@ -41,6 +41,29 @@ namespace Elemendid_vormis_TARpv23
             btn.Width = 70;
             btn.Location = new Point(150, 50);
             btn.Click += Btn_Click;
+            //nupp1-Picture Viewer
+            btn1 = new Button();
+            btn1.Text = "Picture Viewer";
+            btn1.Height = 60;
+            btn1.Width = 90;
+            btn1.Location = new Point(150, 500);
+            btn1.Click += Btn1_Click;
+            //nupp2-Math Quiz
+            btn2 = new Button();
+            btn2.Text = "Math Quiz";
+            btn2.Height = 60;
+            btn2.Width = 90;
+            btn2.Location = new Point(250, 500);
+            btn2.Click += Btn2_Click;
+            //nupp3-Matching Game
+            btn3 = new Button();
+            btn3.Text = "Matching Game";
+            btn3.Height = 60;
+            btn3.Width = 90;
+            btn3.Location = new Point(450, 500);
+            btn3.Click += Btn3_Click;
+
+
             //silt-label
             lbl = new Label();
             lbl.Text = "Aknade elemendid C# abil"; 
@@ -58,6 +81,27 @@ namespace Elemendid_vormis_TARpv23
             pbox.DoubleClick += Pbox_DoubleClick;
 
 
+        }
+
+        private void Btn3_Click(object? sender, EventArgs e)
+        {
+            NeljasVorm neljasVorm = new NeljasVorm(800, 900);
+            neljasVorm.Show();
+            btn3.BackColor = Color.RosyBrown;
+        }
+
+        private void Btn2_Click(object? sender, EventArgs e)
+        {
+            KolmVorm kolmVorm = new KolmVorm(800, 900);
+            kolmVorm.Show();
+            btn2.BackColor = Color.Turquoise;
+        }
+
+        private void Btn1_Click(object? sender, EventArgs e)
+        {
+            TeineVorm teineVorm = new TeineVorm(800, 900);
+            teineVorm.Show();
+            btn1.BackColor = Color.Violet;
         }
 
         int tt = 0;
@@ -96,8 +140,6 @@ namespace Elemendid_vormis_TARpv23
             {
                 btn.BackColor = Color.Orange;
             }
-            TeineVorm teineVorm = new TeineVorm(200, 200);
-            teineVorm.Show();
         }
 
         private void Tree_AfterSelect(object? sender, TreeViewEventArgs e)
@@ -179,7 +221,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 txt = new TextBox();
                 txt.Location = new Point(150+btn.Width +10, btn.Height);
-                txt.Font = new Font("Arial", 30);
+                txt.Font = new Font("Arial", 10);
                 txt.Width = 200;
                 txt.TextChanged += Txt_TextChanged;
                 Controls.Add(txt);
@@ -226,6 +268,18 @@ namespace Elemendid_vormis_TARpv23
                     ds.WriteXml(@"..\..\..\menu.xml");
                     MessageBox.Show("Oli sisestatud" + text);
                 }
+            }
+            else if(e.Node.Text == "Picture Viewer")
+            {
+                Controls.Add(btn1);
+            }
+            else if (e.Node.Text == "Math Quiz")
+            {
+                Controls.Add(btn2);
+            }
+            else if(e.Node.Text =="Matching Game")
+            {
+                Controls.Add(btn3);
             }
         }
 
