@@ -19,7 +19,7 @@ namespace Elemendid_vormis_TARpv23
             equals, signs;
         TableLayoutPanel tlp;
         Button close, start;
-        System.Timers.Timer timer;
+        System.Windows.Forms.Timer timer;
         NumericUpDown numeric1, numeric2, numeric3, numeric4;
         FlowLayoutPanel flp;
 
@@ -83,28 +83,28 @@ namespace Elemendid_vormis_TARpv23
             numeric1 = new NumericUpDown();
             numeric1.Font = new Font("Calibri", 18, FontStyle.Regular);
             numeric1.Width = 100;
-            numeric1.Text = "sum";
+            numeric1.Name = "sum";
             numeric1.Enter += Numeric1_Enter;
 
             //numeric2
             numeric2 = new NumericUpDown();
             numeric2.Font = new Font("Calibri", 18, FontStyle.Regular);
             numeric2.Width = 100;
-            numeric2.Text = "min";
+            numeric2.Name = "min";
             numeric2.Enter += Numeric2_Enter;
 
             //numeric3
             numeric3 = new NumericUpDown();
             numeric3.Font = new Font("Calibri", 18, FontStyle.Regular);
             numeric3.Width = 100;
-            numeric3.Text = "umn";
+            numeric3.Name = "umn";
             numeric3.Enter += Numeric3_Enter;
 
             //numeric4
             numeric4 = new NumericUpDown();
             numeric4.Font = new Font("Calibri", 18, FontStyle.Regular);
             numeric4.Width = 100;
-            numeric4.Text = "del";
+            numeric4.Name = "del";
             numeric4.Enter += Numeric4_Enter;
 
             tlp.Controls.Add(numeric1);
@@ -257,7 +257,7 @@ namespace Elemendid_vormis_TARpv23
             close.Click += Close_Click; 
 
             //Timer
-            timer = new System.Timers.Timer();
+            timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
             
@@ -280,12 +280,12 @@ namespace Elemendid_vormis_TARpv23
             else if (timeLeft > 0)
             {
                 timeLeft = timeLeft - 1;
-                time.Text = timeLeft + " seconds";
+                lbl.Text = timeLeft + " seconds";
             }
             else
             {
                 timer.Stop();
-                time.Text = "Aeg on läbi!";
+                lbl.Text = "Aeg on läbi!";
                 MessageBox.Show("Sa ei jõudnud aegade lõpuni:(", "Vabandust!");
                 numeric1.Value = addend1 + addend2;
                 numeric2.Value = minuend - subtrahend;
@@ -397,10 +397,10 @@ namespace Elemendid_vormis_TARpv23
         // Check the answers to see if the user got everything right.
         private bool CheckTheAnswer()
         {
-            if ((addend1 + addend2 == sum.Value)
-                && (minuend - subtrahend == difference.Value)
-                && (multiplicand * multiplier == product.Value)
-                && (dividend / divisor == quotient.Value))
+            if ((addend1 + addend2 == numeric1.Value)
+                && (minuend - subtrahend == numeric2.Value)
+                && (multiplicand * multiplier == numeric3.Value)
+                && (dividend / divisor == numeric4.Value))
                 return true;
             else
                 return false;
