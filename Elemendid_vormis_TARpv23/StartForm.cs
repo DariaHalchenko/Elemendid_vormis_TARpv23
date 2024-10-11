@@ -92,7 +92,7 @@ namespace Elemendid_vormis_TARpv23
 
         private void Btn2_Click(object? sender, EventArgs e)
         {
-            KolmVorm kolmVorm = new KolmVorm(800, 900);
+            KolmVorm kolmVorm = new KolmVorm(800, 600);
             kolmVorm.Show();
             btn2.BackColor = Color.Turquoise;
         }

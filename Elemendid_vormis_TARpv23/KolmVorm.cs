@@ -14,13 +14,13 @@ namespace Elemendid_vormis_TARpv23
     public partial class KolmVorm : Form
     {
         List<string> actions = new List<string> { "+", "-", "*", "/" };
-        Label lbl, plusLeftLabel, plusRightLabel, minusLeftLabel, minusRightLabel,
+        Label time, plusLeftLabel, plusRightLabel, minusLeftLabel, minusRightLabel,
             multiplicationLeft, multiplicationRight, divisionLeft, divisionRight,
             equals, signs;
         TableLayoutPanel tlp;
         Button close, start;
         System.Windows.Forms.Timer timer;
-        NumericUpDown numeric1, numeric2, numeric3, numeric4;
+        NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
 
         Random random = new Random();
@@ -59,7 +59,6 @@ namespace Elemendid_vormis_TARpv23
             tlp = new TableLayoutPanel();
             tlp.BorderStyle = BorderStyle.FixedSingle;
             tlp.AutoSize = true;
-            tlp.Location = new Point(0, 100);
             tlp.ColumnCount = 5;
             tlp.RowCount = 4;
 
@@ -76,118 +75,103 @@ namespace Elemendid_vormis_TARpv23
             flp= new FlowLayoutPanel();
             flp.FlowDirection = FlowDirection.RightToLeft;
             flp.Dock = DockStyle.Top;
+            flp.AutoSize = true;
             flp.Controls.Add(tlp);
 
             //NumericUpDown
-            //numeric1
-            numeric1 = new NumericUpDown();
-            numeric1.Font = new Font("Calibri", 18, FontStyle.Regular);
-            numeric1.Width = 100;
-            numeric1.Name = "sum";
-            numeric1.Enter += Numeric1_Enter;
+            //sum
+            sum = new NumericUpDown();
+            sum.Font = new Font("Calibri", 18, FontStyle.Regular);
+            sum.Width = 100;
+            sum.Text = "sum";
+            sum.Enter += Sum_Enter;
 
-            //numeric2
-            numeric2 = new NumericUpDown();
-            numeric2.Font = new Font("Calibri", 18, FontStyle.Regular);
-            numeric2.Width = 100;
-            numeric2.Name = "min";
-            numeric2.Enter += Numeric2_Enter;
+            //difference
+            difference = new NumericUpDown();
+            difference.Font = new Font("Calibri", 18, FontStyle.Regular);
+            difference.Width = 100;
+            difference.Text = "min";
+            difference.Enter += Difference_Enter;
 
-            //numeric3
-            numeric3 = new NumericUpDown();
-            numeric3.Font = new Font("Calibri", 18, FontStyle.Regular);
-            numeric3.Width = 100;
-            numeric3.Name = "umn";
-            numeric3.Enter += Numeric3_Enter;
+            //product
+            product = new NumericUpDown();
+            product.Font = new Font("Calibri", 18, FontStyle.Regular);
+            product.Width = 100;
+            product.Text = "umn";
+            product.Enter += Product_Enter;
 
-            //numeric4
-            numeric4 = new NumericUpDown();
-            numeric4.Font = new Font("Calibri", 18, FontStyle.Regular);
-            numeric4.Width = 100;
-            numeric4.Name = "del";
-            numeric4.Enter += Numeric4_Enter;
+            //quotient
+            quotient = new NumericUpDown();
+            quotient.Font = new Font("Calibri", 18, FontStyle.Regular);
+            quotient.Width = 100;
+            quotient.Text = "del";
+            quotient.Enter += Quotient_Enter;
 
-            tlp.Controls.Add(numeric1);
-            tlp.SetCellPosition(numeric1, new TableLayoutPanelCellPosition(4, 0));
-            tlp.Controls.Add(numeric2);
-            tlp.SetCellPosition(numeric2, new TableLayoutPanelCellPosition(4, 1));
-            tlp.Controls.Add(numeric3);
-            tlp.SetCellPosition(numeric3, new TableLayoutPanelCellPosition(4, 2));
-            tlp.Controls.Add(numeric4);
-            tlp.SetCellPosition(numeric4, new TableLayoutPanelCellPosition(4, 3));
+
+            tlp.Controls.Add(sum, 4, 0);
+            tlp.Controls.Add(difference, 4, 1);
+            tlp.Controls.Add(product, 4, 2);
+            tlp.Controls.Add(quotient, 4, 3);
 
             //Time Left - lbl
-            lbl = new Label();
-            lbl.Name = "Time Left";
-            lbl.AutoSize = false;
-            lbl.Size = new Size(60, 50);
-            lbl.Font = new Font("Arial", 18, FontStyle.Italic);
-            lbl.TextAlign = ContentAlignment.MiddleCenter;
-            lbl.Location = new Point(50, 75);
+            time = new Label();
+            time.AutoSize = true;
+            time.Text = "Time Left: 40 seconds";
+            time.Font = new Font("Arial", 18, FontStyle.Italic);
+            time.TextAlign = ContentAlignment.MiddleCenter;
+            time.Dock = DockStyle.Top;
 
             //Plus Left
             plusLeftLabel = new Label();
-            plusLeftLabel.AutoSize = false;
-            plusLeftLabel.Dock = DockStyle.Fill;
-            plusLeftLabel.TextAlign = ContentAlignment.MiddleCenter;
-            plusLeftLabel.Font = new Font("Arial", 18, FontStyle.Italic);
             plusLeftLabel.Text = "?";
+            plusLeftLabel.Font = new Font("Arial", 18, FontStyle.Italic);
+            plusLeftLabel.TextAlign = ContentAlignment.MiddleCenter;
+            
 
             //Plus Right
             plusRightLabel = new Label();
-            plusRightLabel.AutoSize = false;
-            plusRightLabel.Dock = DockStyle.Fill;
-            plusRightLabel.TextAlign = ContentAlignment.MiddleCenter;
-            plusRightLabel.Font = new Font("Arial", 18, FontStyle.Italic);
             plusRightLabel.Text = "?";
-
+            plusRightLabel.Font = new Font("Arial", 18, FontStyle.Italic);
+            plusRightLabel.TextAlign = ContentAlignment.MiddleCenter;
+            
+            
             //Minus Left
             minusLeftLabel = new Label();
-            minusLeftLabel.AutoSize = false;
-            minusLeftLabel.Dock = DockStyle.Fill;
-            minusLeftLabel.TextAlign = ContentAlignment.MiddleCenter;
-            minusLeftLabel.Font = new Font("Arial", 18, FontStyle.Italic);
             minusLeftLabel.Text = "?";
+            minusLeftLabel.Font = new Font("Arial", 18, FontStyle.Italic);
+            minusLeftLabel.TextAlign = ContentAlignment.MiddleCenter;
+            
 
             //Minus Right
             minusRightLabel = new Label();
-            minusRightLabel.AutoSize = false;
-            minusRightLabel.Dock = DockStyle.Fill;
-            minusRightLabel.TextAlign = ContentAlignment.MiddleCenter;
-            minusRightLabel.Font = new Font("Arial", 18, FontStyle.Italic);
             minusRightLabel.Text = "?";
+            minusRightLabel.Font = new Font("Arial", 18, FontStyle.Italic);
+            minusRightLabel.TextAlign = ContentAlignment.MiddleCenter;
+ 
 
             //Multiplication Left
             multiplicationLeft = new Label();
-            multiplicationLeft.AutoSize = false;
-            multiplicationLeft.Dock = DockStyle.Fill;
-            multiplicationLeft.TextAlign = ContentAlignment.MiddleCenter;
-            multiplicationLeft.Font = new Font("Arial", 18, FontStyle.Italic);
             multiplicationLeft.Text = "?";
+            multiplicationLeft.Font = new Font("Arial", 18, FontStyle.Italic);
+            multiplicationLeft.TextAlign = ContentAlignment.MiddleCenter;
 
             //Multiplication Right
             multiplicationRight = new Label();
-            multiplicationRight.AutoSize = false;
-            multiplicationRight.Dock = DockStyle.Fill;
-            multiplicationRight.TextAlign = ContentAlignment.MiddleCenter;
-            multiplicationRight.Font = new Font("Arial", 18, FontStyle.Italic);
             multiplicationRight.Text = "?";
+            multiplicationRight.Font = new Font("Arial", 18, FontStyle.Italic);
+            multiplicationRight.TextAlign = ContentAlignment.MiddleCenter;
 
             //Division Left
             divisionLeft = new Label();
-            divisionLeft.AutoSize = false;
-            divisionLeft.Dock = DockStyle.Fill;
-            divisionLeft.TextAlign = ContentAlignment.MiddleCenter;
-            divisionLeft.Font = new Font("Arial", 18, FontStyle.Italic);
             divisionLeft.Text = "?";
+            divisionLeft.Font = new Font("Arial", 18, FontStyle.Italic);
+            divisionLeft.TextAlign = ContentAlignment.MiddleCenter;
 
             //Division Right
             divisionRight = new Label();
-            divisionRight.AutoSize = false;
-            divisionRight.Dock = DockStyle.Fill;
-            divisionRight.TextAlign = ContentAlignment.MiddleCenter;
-            divisionRight.Font = new Font("Arial", 18, FontStyle.Italic);
             divisionRight.Text = "?";
+            divisionRight.Font = new Font("Arial", 18, FontStyle.Italic);
+            divisionRight.TextAlign = ContentAlignment.MiddleCenter;
 
             //Добавление "равно" в Label vordub и знаков при помощи цикла
             for (int i = 0; i < 4; i++)
@@ -199,8 +183,7 @@ namespace Elemendid_vormis_TARpv23
                 equals.Font = new Font("Calibri", 15, FontStyle.Regular);
                 equals.Text = actions [i];
                 
-                tlp.Controls.Add(equals);
-                tlp.SetCellPosition(equals, new TableLayoutPanelCellPosition(1, i));
+                tlp.Controls.Add(equals, 1, i);
                 
                 
                 signs = new Label();
@@ -210,38 +193,30 @@ namespace Elemendid_vormis_TARpv23
                 signs.Font = new Font("Calibri", 20, FontStyle.Regular);
                 signs.Text = "=";
                 
-                tlp.Controls.Add(signs);
-                tlp.SetCellPosition(signs, new TableLayoutPanelCellPosition(3, i));
+                tlp.Controls.Add(signs, 3, i);
             }
 
-            tlp.Controls.Add(plusLeftLabel);
-            tlp.SetCellPosition(plusLeftLabel, new TableLayoutPanelCellPosition(0, 0));
-            tlp.Controls.Add(plusRightLabel);
-            tlp.SetCellPosition(plusRightLabel, new TableLayoutPanelCellPosition(2, 0));
+            // Добавляем метки для чисел
+            tlp.Controls.Add(plusLeftLabel, 0, 0);
+            tlp.Controls.Add(plusRightLabel, 2, 0);
 
-            tlp.Controls.Add(minusLeftLabel);
-            tlp.SetCellPosition(minusLeftLabel, new TableLayoutPanelCellPosition(0, 1));
-            tlp.Controls.Add(minusRightLabel);
-            tlp.SetCellPosition(minusRightLabel, new TableLayoutPanelCellPosition(2, 1));
+            tlp.Controls.Add(minusLeftLabel, 0, 1);
+            tlp.Controls.Add(minusRightLabel, 2, 1);
 
-            tlp.Controls.Add(multiplicationLeft);
-            tlp.SetCellPosition(multiplicationLeft, new TableLayoutPanelCellPosition(0, 2));
-            tlp.Controls.Add(multiplicationRight);
-            tlp.SetCellPosition(multiplicationRight, new TableLayoutPanelCellPosition(2, 2));
+            tlp.Controls.Add(multiplicationLeft, 0, 2);
+            tlp.Controls.Add(multiplicationRight, 2, 2);
 
-            tlp.Controls.Add(divisionLeft);
-            tlp.SetCellPosition(divisionLeft, new TableLayoutPanelCellPosition(0, 3));
-            tlp.Controls.Add(divisionRight);
-            tlp.SetCellPosition(divisionRight, new TableLayoutPanelCellPosition(2, 3));
+            tlp.Controls.Add(divisionLeft, 0, 3);
+            tlp.Controls.Add(divisionRight, 2, 3);
 
             //Button start the quiz
             start = new Button();
             start.Text = "Start the quiz";
             start.Font = new Font("Arial", 18, FontStyle.Italic);
             start.Height = 60;
-            start.Width = 90;
+            start.Width = 150;
             start.AutoSize = true;
-            start.Location = new Point(150, 290);
+            start.Location = new Point(10, 300);
             start.BackColor = Color.AliceBlue;
             start.Click += Start_Click;
 
@@ -250,22 +225,22 @@ namespace Elemendid_vormis_TARpv23
             close.Text = "Close";
             close.Font = new Font("Arial", 18, FontStyle.Italic);
             close.Height = 60;
-            close.Width = 90;
+            close.Width = 150;
             close.AutoSize = true;
-            close.Location = new Point(150, 340);
+            close.Location = new Point(10, 350);
             close.BackColor = Color.AliceBlue;
-            close.Click += Close_Click; 
+            close.Click += Close_Click;
 
             //Timer
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
-            
 
+
+            this.Controls.Add(flp);
+            this.Controls.Add(time);
             this.Controls.Add(start);
             this.Controls.Add(close);
-            this.Controls.Add(lbl);
-            this.Controls.Add(flp);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -280,22 +255,22 @@ namespace Elemendid_vormis_TARpv23
             else if (timeLeft > 0)
             {
                 timeLeft = timeLeft - 1;
-                lbl.Text = timeLeft + " seconds";
+                time.Text = timeLeft + " seconds";
             }
             else
             {
                 timer.Stop();
-                lbl.Text = "Aeg on läbi!";
+                time.Text = "Aeg on läbi!";
                 MessageBox.Show("Sa ei jõudnud aegade lõpuni:(", "Vabandust!");
-                numeric1.Value = addend1 + addend2;
-                numeric2.Value = minuend - subtrahend;
-                numeric3.Value = multiplicand * multiplier;
-                numeric4.Value = dividend / divisor;
+                sum.Value = addend1 + addend2;
+                difference.Value = minuend - subtrahend;
+                product.Value = multiplicand * multiplier;
+                quotient.Value = dividend / divisor;
                 start.Enabled = true;
             }
         }
         
-        private void Numeric4_Enter(object? sender, EventArgs e)
+        private void Quotient_Enter(object? sender, EventArgs e)
         {
             NumericUpDown answerBox = sender as NumericUpDown;
             if (answerBox != null)
@@ -305,7 +280,7 @@ namespace Elemendid_vormis_TARpv23
             }
         }
 
-        private void Numeric3_Enter(object? sender, EventArgs e)
+        private void Product_Enter(object? sender, EventArgs e)
         {
             NumericUpDown answerBox = sender as NumericUpDown;
             if (answerBox != null)
@@ -315,7 +290,7 @@ namespace Elemendid_vormis_TARpv23
             }
         }
 
-        private void Numeric2_Enter(object? sender, EventArgs e)
+        private void Difference_Enter(object? sender, EventArgs e)
         {
             NumericUpDown answerBox = sender as NumericUpDown;
             if (answerBox != null)
@@ -325,7 +300,7 @@ namespace Elemendid_vormis_TARpv23
             }
         }
 
-        private void Numeric1_Enter(object? sender, EventArgs e)
+        private void Sum_Enter(object? sender, EventArgs e)
         {
             NumericUpDown answerBox = sender as NumericUpDown;
             if (answerBox != null)
@@ -338,12 +313,14 @@ namespace Elemendid_vormis_TARpv23
         private void Close_Click(object? sender, EventArgs e)
         {
             this.Close();
+            close.BackColor = Color.Azure;
         }
 
         private void Start_Click(object? sender, EventArgs e)
         {
             StartTheQuiz();
             start.Enabled = false;
+            close.BackColor= Color.BlueViolet;
         }
 
         
@@ -365,21 +342,21 @@ namespace Elemendid_vormis_TARpv23
             // 'sum' is the name of the NumericUpDown control.
             // This step makes sure its value is zero before
             // adding any values to it.
-            numeric1.Value = 0;
+            sum.Value = 0;
 
             // Fill in the subtraction problem.
             minuend = random.Next(1, 101);
             subtrahend = random.Next(1, minuend);
             minusLeftLabel.Text = minuend.ToString();
             minusRightLabel.Text = subtrahend.ToString();
-            numeric2.Value = 0;
+            difference.Value = 0;
 
             // Fill in the multiplication problem.
             multiplicand = random.Next(2, 11);
             multiplier = random.Next(2, 11);
             multiplicationLeft.Text = multiplicand.ToString();
             multiplicationRight.Text = multiplier.ToString();
-            numeric3.Value = 0;
+            product.Value = 0;
 
             // Fill in the division problem.
             divisor = random.Next(2, 11);
@@ -387,26 +364,23 @@ namespace Elemendid_vormis_TARpv23
             dividend = divisor * temporaryQuotient;
             divisionLeft.Text = dividend.ToString();
             divisionRight.Text = divisor.ToString();
-            numeric4.Value = 0;
+            quotient.Value = 0;
 
             // Start the timer.
-            timeLeft = 30;
-            lbl.Text = "30 seconds";
+            timeLeft = 40;
+            time.Text = "40 seconds";
             timer.Start();
         }
         // Check the answers to see if the user got everything right.
         private bool CheckTheAnswer()
         {
-            if ((addend1 + addend2 == numeric1.Value)
-                && (minuend - subtrahend == numeric2.Value)
-                && (multiplicand * multiplier == numeric3.Value)
-                && (dividend / divisor == numeric4.Value))
+            if ((addend1 + addend2 == sum.Value)
+                && (minuend - subtrahend == difference.Value)
+                && (multiplicand * multiplier == product.Value)
+                && (dividend / divisor == quotient.Value))
                 return true;
             else
                 return false;
         }
-
-
-
     }
 }
