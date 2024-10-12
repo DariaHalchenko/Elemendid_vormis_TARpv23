@@ -60,7 +60,7 @@ namespace Elemendid_vormis_TARpv23
             btn3.Text = "Matching Game";
             btn3.Height = 60;
             btn3.Width = 90;
-            btn3.Location = new Point(450, 500);
+            btn3.Location = new Point(350, 500);
             btn3.Click += Btn3_Click;
 
 
@@ -85,7 +85,7 @@ namespace Elemendid_vormis_TARpv23
 
         private void Btn3_Click(object? sender, EventArgs e)
         {
-            NeljasVorm neljasVorm = new NeljasVorm(800, 900);
+            NeljasVorm neljasVorm = new NeljasVorm(600, 600);
             neljasVorm.Show();
             btn3.BackColor = Color.RosyBrown;
         }

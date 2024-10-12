@@ -255,7 +255,7 @@ namespace Elemendid_vormis_TARpv23
             else if (timeLeft > 0)
             {
                 timeLeft = timeLeft - 1;
-                time.Text = timeLeft + " seconds";
+                time.Text = "Time Left: " + timeLeft + " seconds";
             }
             else
             {
@@ -313,14 +313,14 @@ namespace Elemendid_vormis_TARpv23
         private void Close_Click(object? sender, EventArgs e)
         {
             this.Close();
-            close.BackColor = Color.Azure;
+
         }
 
         private void Start_Click(object? sender, EventArgs e)
         {
             StartTheQuiz();
             start.Enabled = false;
-            close.BackColor= Color.BlueViolet;
+            start.BackColor= Color.BlueViolet;
         }
 
         
@@ -368,7 +368,7 @@ namespace Elemendid_vormis_TARpv23
 
             // Start the timer.
             timeLeft = 40;
-            time.Text = "40 seconds";
+            time.Text = "Time Left: 40 seconds";
             timer.Start();
         }
         // Check the answers to see if the user got everything right.
