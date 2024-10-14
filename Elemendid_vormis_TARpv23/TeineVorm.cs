@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -15,11 +16,12 @@ namespace Elemendid_vormis_TARpv23
     {
         TableLayoutPanel tlp;
         FlowLayoutPanel flp;
-        Button sap, ctp, close, stbc;
-        PictureBox picture;
+        Button sap, ctp, close, stbc, left, right, filter;
+        PictureBox picturebox;
         CheckBox chk;
         OpenFileDialog openfiledialog;
         ColorDialog colordialog;
+        Image image;
 
         public TeineVorm(int w, int h)
         {
@@ -32,11 +34,12 @@ namespace Elemendid_vormis_TARpv23
             tlp.Dock = DockStyle.Fill;
 
             // PictureBox
-            picture = new PictureBox();
-            picture.Dock = DockStyle.Fill;
-            picture.BorderStyle = BorderStyle.Fixed3D;
-            tlp.Controls.Add(picture);
-            tlp.SetColumnSpan(picture, 2);
+            picturebox = new PictureBox();
+            picturebox.Dock = DockStyle.Fill;
+            picturebox.BorderStyle = BorderStyle.Fixed3D;
+            picturebox.SizeMode = PictureBoxSizeMode.Zoom;
+            tlp.Controls.Add(picturebox);
+            tlp.SetColumnSpan(picturebox, 2);
 
             // CheckBox
             chk = new CheckBox();
@@ -73,10 +76,31 @@ namespace Elemendid_vormis_TARpv23
             sap.AutoSize = true;
             sap.Click += Sap_Click;
 
+            //Button - left
+            left = new Button();
+            left.Text = "Pööra vasakule";
+            left.AutoSize = true;
+            left.Click += Left_Click; 
+
+            //Button - right
+            right = new Button();
+            right.Text = "Pööra paremale";
+            right.AutoSize = true;
+            right.Click += Right_Click;
+
+            //Button - filter
+            filter = new Button();
+            filter.Text = "Punane & Must";
+            filter.AutoSize = true;
+            filter.Click += Filter_Click;
+
             // Lisa buttons to FlowLayoutPanel
             tlp.Controls.Add(flp);
             flp.Controls.Add(stbc);
             flp.Controls.Add(ctp);
+            flp.Controls.Add(left);
+            flp.Controls.Add(right);
+            flp.Controls.Add(filter);
             flp.Controls.Add(sap);
             flp.Controls.Add(close);
             
@@ -99,28 +123,65 @@ namespace Elemendid_vormis_TARpv23
             colordialog = new ColorDialog();
         }
 
+        private void Filter_Click(object? sender, EventArgs e)
+        {
+            Bitmap redBlackEffect = (Bitmap)picturebox.Image.Clone();
+            for (int yCoordinate = 0; yCoordinate < redBlackEffect.Height; yCoordinate++)
+            {
+                for (int xCoordinate = 0; xCoordinate < redBlackEffect.Width; xCoordinate++)
+                {
+                    Color color = redBlackEffect.GetPixel(xCoordinate, yCoordinate);
+                    double grayColor = ((double)(color.R + color.G + color.B)) / 3.0d;
+                    Color sepia = Color.FromArgb((byte)grayColor, (byte)(0), (byte)(0));
+                    redBlackEffect.SetPixel(xCoordinate, yCoordinate, sepia);
+                }
+            }
+            picturebox.Image = redBlackEffect;
+        }
+
+        private void Right_Click(object? sender, EventArgs e)
+        {
+            if (image != null)
+            {
+                // Поворачиваем изображение на 90 градусов
+                image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                picturebox.Image = image; // Обновляем PictureBox
+            }
+        }
+
+        private void Left_Click(object? sender, EventArgs e)
+        {
+            if (image != null)
+            {
+                // Поворачиваем изображение на 270 градусов
+                image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                picturebox.Image = image; // Обновляем PictureBox
+            }
+        }
+
         private void Chk_CheckedChanged(object? sender, EventArgs e)
         {
-            picture.SizeMode = chk.Checked ? PictureBoxSizeMode.StretchImage : PictureBoxSizeMode.Normal;
+            picturebox.SizeMode = chk.Checked ? PictureBoxSizeMode.StretchImage : PictureBoxSizeMode.Normal;
         }
 
         private void Sap_Click(object? sender, EventArgs e)
         {
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
-                picture.Load(openfiledialog.FileName);
+                image = Image.FromFile(openfiledialog.FileName); // Сохраняем изображение
+                picturebox.Image = image; // Показываем изображение
             }
         }
 
         private void Ctp_Click(object? sender, EventArgs e)
         {
-            picture.Image = null;
+            picturebox.Image = null;
         }
 
         private void Stbc_Click(object? sender, EventArgs e)
         {
             if (colordialog.ShowDialog() == DialogResult.OK)
-                picture.BackColor = colordialog.Color;
+                picturebox.BackColor = colordialog.Color;
         }
 
         private void Close_Click(object? sender, EventArgs e)

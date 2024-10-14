@@ -53,12 +53,13 @@ namespace Elemendid_vormis_TARpv23
             this.Height = h;
             this.Width = w;
             this.Text = "Math Quiz";
-            this.BackColor = Color.LightSkyBlue;
+            this.BackColor = Color.Thistle;
 
             //TableLayoutPanel
             tlp = new TableLayoutPanel();
             tlp.BorderStyle = BorderStyle.FixedSingle;
             tlp.AutoSize = true;
+            tlp.BackColor = Color.LightPink;
             tlp.ColumnCount = 5;
             tlp.RowCount = 4;
 
@@ -84,6 +85,7 @@ namespace Elemendid_vormis_TARpv23
             sum.Font = new Font("Calibri", 18, FontStyle.Regular);
             sum.Width = 100;
             sum.Text = "sum";
+            sum.BackColor = Color.PapayaWhip;
             sum.Enter += Sum_Enter;
 
             //difference
@@ -91,6 +93,7 @@ namespace Elemendid_vormis_TARpv23
             difference.Font = new Font("Calibri", 18, FontStyle.Regular);
             difference.Width = 100;
             difference.Text = "min";
+            difference.BackColor = Color.PapayaWhip;
             difference.Enter += Difference_Enter;
 
             //product
@@ -98,6 +101,7 @@ namespace Elemendid_vormis_TARpv23
             product.Font = new Font("Calibri", 18, FontStyle.Regular);
             product.Width = 100;
             product.Text = "umn";
+            product.BackColor = Color.PapayaWhip;
             product.Enter += Product_Enter;
 
             //quotient
@@ -105,6 +109,7 @@ namespace Elemendid_vormis_TARpv23
             quotient.Font = new Font("Calibri", 18, FontStyle.Regular);
             quotient.Width = 100;
             quotient.Text = "del";
+            quotient.BackColor = Color.PapayaWhip;
             quotient.Enter += Quotient_Enter;
 
 
@@ -117,9 +122,10 @@ namespace Elemendid_vormis_TARpv23
             time = new Label();
             time.AutoSize = true;
             time.Text = "Time Left: 40 seconds";
-            time.Font = new Font("Arial", 18, FontStyle.Italic);
+            time.Font = new Font("Harlow Solid Italic", 18, FontStyle.Italic);
             time.TextAlign = ContentAlignment.MiddleCenter;
             time.Dock = DockStyle.Top;
+            
 
             //Plus Left
             plusLeftLabel = new Label();
@@ -212,23 +218,21 @@ namespace Elemendid_vormis_TARpv23
             //Button start the quiz
             start = new Button();
             start.Text = "Start the quiz";
-            start.Font = new Font("Arial", 18, FontStyle.Italic);
-            start.Height = 60;
-            start.Width = 150;
-            start.AutoSize = true;
-            start.Location = new Point(10, 300);
-            start.BackColor = Color.AliceBlue;
+            start.Font = new Font("Algerian", 18, FontStyle.Italic);
+            start.Height = 45;
+            start.Width = 250;
+            start.Location = new Point(12, 300);
+            start.BackColor = Color.Plum;
             start.Click += Start_Click;
 
             //Button - Close
             close = new Button();
             close.Text = "Close";
-            close.Font = new Font("Arial", 18, FontStyle.Italic);
-            close.Height = 60;
-            close.Width = 150;
-            close.AutoSize = true;
+            close.Font = new Font("Algerian", 18, FontStyle.Italic);
+            close.Height = 45;
+            close.Width = 250;
             close.Location = new Point(10, 350);
-            close.BackColor = Color.AliceBlue;
+            close.BackColor = Color.Plum;
             close.Click += Close_Click;
 
             //Timer
@@ -320,7 +324,6 @@ namespace Elemendid_vormis_TARpv23
         {
             StartTheQuiz();
             start.Enabled = false;
-            start.BackColor= Color.BlueViolet;
         }
 
         
