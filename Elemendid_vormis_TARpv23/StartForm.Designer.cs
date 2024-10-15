@@ -52,7 +52,6 @@
             Controls.Add(tableLayoutPanel1);
             Name = "StartForm";
             Text = "Form1";
-            Load += StartForm_Load;
             ResumeLayout(false);
         }
 

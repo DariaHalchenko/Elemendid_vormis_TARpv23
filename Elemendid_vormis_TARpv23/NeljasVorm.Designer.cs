@@ -37,7 +37,6 @@
             ClientSize = new Size(800, 450);
             Name = "NeljasVorm";
             Text = "NeljasForm";
-            Load += NeljasVorm_Load;
             ResumeLayout(false);
         }
 

@@ -34,6 +34,7 @@ namespace Elemendid_vormis_TARpv23
             this.Width = w;
             this.Text = "Matching Game";
 
+
             tlp = new TableLayoutPanel();
             tlp.Dock = DockStyle.Fill;
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
@@ -120,7 +121,49 @@ namespace Elemendid_vormis_TARpv23
             gametimer.Interval = 1000;
             gametimer.Tick += Gametimer_Tick;
 
+            // Создание MenuStrip для выбора шрифта
+            MenuStrip ms = new MenuStrip();
+            ToolStripMenuItem menu = new ToolStripMenuItem("Menu");
+            ToolStripMenuItem fontMenu = new ToolStripMenuItem("Font");
+            ToolStripMenuItem arialMenuItem = new ToolStripMenuItem("Arial", null, new EventHandler(ArialMenuItem_Click));
+            ToolStripMenuItem wingdingsMenuItem = new ToolStripMenuItem("Wingdings", null, new EventHandler(WingdingsMenuItem_Click));
+
+            // Добавление подменю
+            fontMenu.DropDownItems.Add(arialMenuItem);
+            fontMenu.DropDownItems.Add(wingdingsMenuItem);
+            menu.DropDownItems.Add(fontMenu);
+            ms.Items.Add(menu);
+            this.MainMenuStrip = ms;
+            this.Controls.Add(ms);
+
             this.Controls.Add(tlp);
+        }
+
+        private void ArialMenuItem_Click(object sender, EventArgs e)
+        {
+            // Изменяем шрифт меток на Arial
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label labelsmail)
+                {
+
+                    labelsmail.Font = new Font("Arial", 48, FontStyle.Bold);
+                }
+            }
+        }
+
+        private void WingdingsMenuItem_Click(object sender, EventArgs e)
+        {
+            // Изменяем шрифт меток на Wingdings
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label labelsmail)
+                {
+              
+                    labelsmail.Font = new Font("Wingdings", 48, FontStyle.Bold);
+                }
+            }
+           
         }
 
         private void Varv_Click(object? sender, EventArgs e)
@@ -132,7 +175,7 @@ namespace Elemendid_vormis_TARpv23
                 if (control is Label labelsmail)
                 {
                     // Генерируем новый случайный цвет и применяем к метке
-                    label.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+                    labelsmail.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
                 }
             }
         }
