@@ -18,7 +18,7 @@ namespace Elemendid_vormis_TARpv23
             multiplicationLeft, multiplicationRight, divisionLeft, divisionRight,
             equals, signs;
         TableLayoutPanel tlp;
-        Button close, start;
+        Button close, start, alusta_otsast, varv;
         System.Windows.Forms.Timer timer;
         NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
@@ -220,8 +220,8 @@ namespace Elemendid_vormis_TARpv23
             start.Text = "Start the quiz";
             start.Font = new Font("Algerian", 18, FontStyle.Italic);
             start.Height = 45;
-            start.Width = 250;
-            start.Location = new Point(12, 300);
+            start.Width = 200;
+            start.Location = new Point(10, 300);
             start.BackColor = Color.Plum;
             start.Click += Start_Click;
 
@@ -230,10 +230,30 @@ namespace Elemendid_vormis_TARpv23
             close.Text = "Close";
             close.Font = new Font("Algerian", 18, FontStyle.Italic);
             close.Height = 45;
-            close.Width = 250;
+            close.Width = 200;
             close.Location = new Point(10, 350);
             close.BackColor = Color.Plum;
             close.Click += Close_Click;
+
+            //Button - alusta_otsast
+            alusta_otsast = new Button();
+            alusta_otsast.Text = "Alusta otsast";
+            alusta_otsast.Font = new Font("Algerian", 18, FontStyle.Italic);
+            alusta_otsast.Height = 45;
+            alusta_otsast.Width = 200;
+            alusta_otsast.Location = new Point(250, 350);
+            alusta_otsast.BackColor = Color.Plum;
+            alusta_otsast.Click += Alusta_otsast_Click;
+
+            //Button - varv
+            varv = new Button();
+            varv.Text = "Muuda värvi";
+            varv.Font = new Font("Algerian", 18, FontStyle.Italic);
+            varv.Height = 45;
+            varv.Width = 200;
+            varv.Location = new Point(250, 300);
+            varv.BackColor = Color.Plum;
+            varv.Click += Varv_Click;
 
             //Timer
             timer = new System.Windows.Forms.Timer();
@@ -245,6 +265,58 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(time);
             this.Controls.Add(start);
             this.Controls.Add(close);
+            this.Controls.Add(alusta_otsast);
+            this.Controls.Add(varv);
+        }
+
+        private void Varv_Click(object? sender, EventArgs e)
+        {
+            Random random = new Random();
+
+            // Генерируем случайные цвета для элементов
+            this.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            tlp.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+
+            // Меняем цвета кнопок
+            start.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            close.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            alusta_otsast.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            varv.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+
+            // Меняем цвет текста меток
+            quotient.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            product.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            difference.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+            sum.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+        }
+
+        private void Alusta_otsast_Click(object? sender, EventArgs e)
+        {
+            // Сбрасываем задание на сложение
+            sum.Value = 0;
+            plusLeftLabel.Text = "?";
+            plusRightLabel.Text = "?";
+
+            // Сбрасываем задание на вычитание
+            difference.Value = 0;
+            minusLeftLabel.Text = "?";
+            minusRightLabel.Text = "?";
+
+            // Сбрасываем задание на умножение
+            product.Value = 0;
+            multiplicationLeft.Text = "?";
+            multiplicationRight.Text = "?";
+
+            // Сбрасываем задание на деление
+            quotient.Value = 0;
+            divisionLeft.Text = "?";
+            divisionRight.Text = "?";
+
+            // Останавливаем таймер и сбрасываем время
+            timer.Stop();
+            timeLeft = 40;
+            time.Text = "Time Left: 40 seconds";
+            start.Enabled = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)

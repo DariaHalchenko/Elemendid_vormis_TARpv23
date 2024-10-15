@@ -66,8 +66,8 @@ namespace Elemendid_vormis_TARpv23
 
             //silt-label
             lbl = new Label();
-            lbl.Text = "Aknade elemendid C# abil"; 
-            lbl.Font=new Font("Arial", 30, FontStyle.Bold);
+            lbl.Text = "Aknade elemendid C# abil";
+            lbl.Font = new Font("Arial", 30, FontStyle.Bold);
             lbl.Size = new Size(520, 50);
             lbl.Location = new Point(150, 0);
             lbl.MouseHover += Lbl_MouseHover; ;
@@ -75,9 +75,9 @@ namespace Elemendid_vormis_TARpv23
 
             pbox = new PictureBox();
             pbox.Size = new Size(60, 60);
-            pbox.Location = new Point(150, btn.Height+lbl.Height + 5);
+            pbox.Location = new Point(150, btn.Height + lbl.Height + 5);
             pbox.SizeMode = PictureBoxSizeMode.Zoom;
-            pbox.Image=Image.FromFile(@"..\..\..\ookul.jpg");
+            pbox.Image = Image.FromFile(@"..\..\..\ookul.jpg");
             pbox.DoubleClick += Pbox_DoubleClick;
 
 
@@ -85,7 +85,7 @@ namespace Elemendid_vormis_TARpv23
 
         private void Btn3_Click(object? sender, EventArgs e)
         {
-            NeljasVorm neljasVorm = new NeljasVorm(600, 600);
+            NeljasVorm neljasVorm = new NeljasVorm(800, 800);
             neljasVorm.Show();
             btn3.BackColor = Color.RosyBrown;
         }
@@ -109,7 +109,7 @@ namespace Elemendid_vormis_TARpv23
         {
             string[] pildid = { "lilla.jpg", "pruun.jpg", "roosa.jpg", "ookul.jpg" };
             string fail = pildid[tt];
-            pbox.Image = Image.FromFile(@"..\..\..\"+ fail);
+            pbox.Image = Image.FromFile(@"..\..\..\" + fail);
             tt++;
             if (tt == 4) { tt = 0; }
         }
@@ -117,13 +117,13 @@ namespace Elemendid_vormis_TARpv23
         private void Lbl_MouseHover(object? sender, EventArgs e)
         {
             lbl.Font = new Font("Castellar", 25, FontStyle.Bold);
-            lbl.ForeColor = Color.FromArgb(70,50,150,200);
+            lbl.ForeColor = Color.FromArgb(70, 50, 150, 200);
             lbl.BackColor = Color.LightYellow;
         }
 
         private void Lbl_MouseLeave(object? sender, EventArgs e)
         {
-            lbl.Font = new Font("Algerian", 30, FontStyle.Regular); 
+            lbl.Font = new Font("Algerian", 30, FontStyle.Regular);
             lbl.ForeColor = Color.MediumVioletRed;
             lbl.BackColor = Color.AliceBlue;
         }
@@ -136,7 +136,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 btn.BackColor = Color.Yellow;
             }
-            else 
+            else
             {
                 btn.BackColor = Color.Orange;
             }
@@ -144,11 +144,11 @@ namespace Elemendid_vormis_TARpv23
 
         private void Tree_AfterSelect(object? sender, TreeViewEventArgs e)
         {
-            if(e.Node.Text=="Nupp")
+            if (e.Node.Text == "Nupp")
             {
                 Controls.Add(btn);
             }
-            else if(e.Node.Text=="Silt")
+            else if (e.Node.Text == "Silt")
             {
                 Controls.Add(lbl);
             }
@@ -173,18 +173,18 @@ namespace Elemendid_vormis_TARpv23
                 chk2.Size = new Size(100, 100);
                 chk2.Location = new Point(150, btn.Height + lbl.Height + pbox.Height + chk1.Height + 15);
                 chk2.CheckedChanged += new EventHandler(Chk_CheckedChanged);
-               
+
                 Controls.Add(chk1);
                 Controls.Add(chk2);
             }
-            else if(e.Node.Text =="Raadionupp")
+            else if (e.Node.Text == "Raadionupp")
             {
                 rbtn1 = new RadioButton();
                 rbtn1.Checked = false;
                 rbtn1.Text = "TARpv23";
                 rbtn1.Location = new Point(150, 420);
                 rbtn1.CheckedChanged += Rbtnd_CheckedChanged;
-              
+
                 rbtn2 = new RadioButton();
                 rbtn2.Checked = false;
                 rbtn2.Text = "LOGITpv23";
@@ -204,7 +204,7 @@ namespace Elemendid_vormis_TARpv23
             else if (e.Node.Text == "Raadionupp1")
             {
                 int x = 20;
-                for (int i = 0; i<rbtn_list.Count; i++)
+                for (int i = 0; i < rbtn_list.Count; i++)
                 {
                     rbtn = new RadioButton();
                     rbtn.Checked = false;
@@ -220,7 +220,7 @@ namespace Elemendid_vormis_TARpv23
             else if (e.Node.Text == "Tekstikast")
             {
                 txt = new TextBox();
-                txt.Location = new Point(150+btn.Width +10, btn.Height);
+                txt.Location = new Point(150 + btn.Width + 10, btn.Height);
                 txt.Font = new Font("Arial", 10);
                 txt.Width = 200;
                 txt.TextChanged += Txt_TextChanged;
@@ -251,7 +251,7 @@ namespace Elemendid_vormis_TARpv23
             }
             else if (e.Node.Text == "Dialogaknad")
             {
-                MessageBox.Show("Dialoog", "See on lihtne aken"); 
+                MessageBox.Show("Dialoog", "See on lihtne aken");
                 var vastus = MessageBox.Show("Sisestame andmed", "Kas tahad InputBoxi kasutada?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (vastus == DialogResult.Yes)
                 {
@@ -259,17 +259,17 @@ namespace Elemendid_vormis_TARpv23
                     Random random = new Random();
                     DataRow dr = ds.Tables["food"].NewRow();
                     dr["name"] = text;
-                    dr["price"]="$"+(random.NextSingle()*10).ToString();
+                    dr["price"] = "$" + (random.NextSingle() * 10).ToString();
                     dr["description"] = "Väga maitsev ";
                     dr["calories"] = random.Next(10, 100);
 
                     ds.Tables["food"].Rows.Add(dr);
-                    if (ds==null) { return; }
+                    if (ds == null) { return; }
                     ds.WriteXml(@"..\..\..\menu.xml");
                     MessageBox.Show("Oli sisestatud" + text);
                 }
             }
-            else if(e.Node.Text == "Picture Viewer")
+            else if (e.Node.Text == "Picture Viewer")
             {
                 Controls.Add(btn1);
             }
@@ -277,7 +277,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 Controls.Add(btn2);
             }
-            else if(e.Node.Text =="Matching Game")
+            else if (e.Node.Text == "Matching Game")
             {
                 Controls.Add(btn3);
             }
@@ -286,7 +286,7 @@ namespace Elemendid_vormis_TARpv23
         private void Dg_RowHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e)
         {
             txt.Text = dg.Rows[e.RowIndex].Cells[0].Value.ToString() + " hind " + dg.Rows[e.RowIndex].Cells[1].Value.ToString();
-            
+
         }
 
         private void Lb_SelectedIndexChanged(object? sender, EventArgs e)
@@ -316,8 +316,8 @@ namespace Elemendid_vormis_TARpv23
             {
                 this.BackColor = Color.AliceBlue;
                 this.ForeColor = Color.OrangeRed;
-                lbl.Font= new Font("Blackadder ITC", 30, FontStyle.Italic);
-                lbl.ForeColor= Color.PaleVioletRed;
+                lbl.Font = new Font("Blackadder ITC", 30, FontStyle.Italic);
+                lbl.ForeColor = Color.PaleVioletRed;
             }
             else if (rbtn2.Checked)
             {
@@ -352,7 +352,7 @@ namespace Elemendid_vormis_TARpv23
             }
             else if (chk1.Checked)
             {
-                
+
                 lbl.ForeColor = Color.YellowGreen;
                 lbl.BorderStyle = BorderStyle.Fixed3D;
                 pbox.BorderStyle = BorderStyle.None;

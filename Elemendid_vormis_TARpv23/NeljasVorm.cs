@@ -17,15 +17,15 @@ namespace Elemendid_vormis_TARpv23
         };
         Label firstClicked = null;
         Label secondClicked = null;
-        
+
         System.Windows.Forms.Timer timer, gametimer;
-       
-        Button close, start;
-        
+
+        Button close, start, varv;
+
         FlowLayoutPanel flp;
-        
+
         Random random = new Random();
-        
+
         int timeLeft;
 
         public NeljasVorm(int w, int h)
@@ -44,7 +44,7 @@ namespace Elemendid_vormis_TARpv23
             table.Dock = DockStyle.Fill;
             table.BackColor = Color.CornflowerBlue;
             table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
-            
+
             table.ColumnCount = 4;
             table.RowCount = 4;
 
@@ -71,14 +71,23 @@ namespace Elemendid_vormis_TARpv23
             start.AutoSize = true;
             start.Click += Start_Click;
 
+            varv = new Button();
+            varv.Text = "Värv";
+            varv.Font = new Font("Arial", 18, FontStyle.Italic);
+            varv.Height = 60;
+            varv.Width = 150;
+            varv.AutoSize = true;
+            varv.Click += Varv_Click;
+
             flp = new FlowLayoutPanel();
             flp.Dock = DockStyle.Bottom;
             flp.FlowDirection = FlowDirection.LeftToRight;
             flp.AutoSize = true;
-            
+
             flp.Controls.Add(time);
             flp.Controls.Add(start);
             flp.Controls.Add(close);
+            flp.Controls.Add(varv);
 
             tlp.Controls.Add(table); // Игровое поле сверху
             tlp.Controls.Add(flp); // Таймер и кнопки снизу
@@ -89,14 +98,14 @@ namespace Elemendid_vormis_TARpv23
                 for (int j = 0; j < 4; j++)
                 {
                     table.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
-                    
+
                     labelsmail[i] = new Label();
                     labelsmail[i].BackColor = Color.CornflowerBlue;
                     labelsmail[i].AutoSize = false;
                     labelsmail[i].Dock = DockStyle.Fill;
                     labelsmail[i].TextAlign = ContentAlignment.MiddleCenter;
                     labelsmail[i].Font = new Font("Wingdings", 48, FontStyle.Bold);
-                    
+
                     table.Controls.Add(labelsmail[i], j, i);
                     labelsmail[i].Click += Game_Click;
 
@@ -107,11 +116,25 @@ namespace Elemendid_vormis_TARpv23
             timer.Interval = 750;
             timer.Tick += Timer_Tick;
 
-            gametimer = new System.Windows.Forms.Timer(); 
+            gametimer = new System.Windows.Forms.Timer();
             gametimer.Interval = 1000;
             gametimer.Tick += Gametimer_Tick;
 
             this.Controls.Add(tlp);
+        }
+
+        private void Varv_Click(object? sender, EventArgs e)
+        {
+
+            // Проходим через все метки в TableLayoutPanel и меняем их цвет
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label labelsmail)
+                {
+                    // Генерируем новый случайный цвет и применяем к метке
+                    label.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+                }
+            }
         }
 
         private void Start_Click(object sender, EventArgs e)
@@ -209,7 +232,7 @@ namespace Elemendid_vormis_TARpv23
                 }
 
                 timer.Start();
-               
+
             }
         }
 
