@@ -15,6 +15,16 @@ namespace Elemendid_vormis_TARpv23
             "!", "!", "N", "N", ",", ",", "k", "k",
             "b", "b", "v", "v", "w", "w", "z", "z"
         };
+        List<string> icons_naine = new List<string>()
+        {
+            "R", "R", "T", "T", "Y", "Y", "Z", "Z",
+            "[", "[", "]", "]", "{", "{", "|", "|"
+        };
+        List<string> icons_mees = new List<string>()
+        {
+            "N", "N", "M", "M", "=", "=", "#", "#",
+            ":", ":", "P", "P", "Q", "Q", ")", ")"
+        };
         Label firstClicked = null;
         Label secondClicked = null;
 
@@ -27,6 +37,8 @@ namespace Elemendid_vormis_TARpv23
         Random random = new Random();
 
         int timeLeft;
+
+        string stiilis;
 
         public NeljasVorm(int w, int h)
         {
@@ -72,14 +84,6 @@ namespace Elemendid_vormis_TARpv23
             start.AutoSize = true;
             start.Click += Start_Click;
 
-            varv = new Button();
-            varv.Text = "Värv";
-            varv.Font = new Font("Arial", 18, FontStyle.Italic);
-            varv.Height = 60;
-            varv.Width = 150;
-            varv.AutoSize = true;
-            varv.Click += Varv_Click;
-
             flp = new FlowLayoutPanel();
             flp.Dock = DockStyle.Bottom;
             flp.FlowDirection = FlowDirection.LeftToRight;
@@ -88,7 +92,6 @@ namespace Elemendid_vormis_TARpv23
             flp.Controls.Add(time);
             flp.Controls.Add(start);
             flp.Controls.Add(close);
-            flp.Controls.Add(varv);
 
             tlp.Controls.Add(table); // Игровое поле сверху
             tlp.Controls.Add(flp); // Таймер и кнопки снизу
@@ -121,22 +124,57 @@ namespace Elemendid_vormis_TARpv23
             gametimer.Interval = 1000;
             gametimer.Tick += Gametimer_Tick;
 
-            // Создание MenuStrip для выбора шрифта
+            // Создание MenuStrip 
             MenuStrip ms = new MenuStrip();
-            ToolStripMenuItem menu = new ToolStripMenuItem("Menu");
-            ToolStripMenuItem fontMenu = new ToolStripMenuItem("Font");
+            ToolStripMenuItem font = new ToolStripMenuItem("Font");
             ToolStripMenuItem arialMenuItem = new ToolStripMenuItem("Arial", null, new EventHandler(ArialMenuItem_Click));
             ToolStripMenuItem wingdingsMenuItem = new ToolStripMenuItem("Wingdings", null, new EventHandler(WingdingsMenuItem_Click));
+            
+            ToolStripMenuItem sugu = new ToolStripMenuItem("Sugu");
+            ToolStripMenuItem naissoostMenuItem = new ToolStripMenuItem("Naissoost", null, new EventHandler(NaissoostMenuItem_Click));
+            ToolStripMenuItem meessoostMenuItem = new ToolStripMenuItem("Meessoost", null, new EventHandler(MeessoostMenuItem_Click));
 
             // Добавление подменю
-            fontMenu.DropDownItems.Add(arialMenuItem);
-            fontMenu.DropDownItems.Add(wingdingsMenuItem);
-            menu.DropDownItems.Add(fontMenu);
-            ms.Items.Add(menu);
+            font.DropDownItems.Add(arialMenuItem);
+            font.DropDownItems.Add(wingdingsMenuItem);
+
+            sugu.DropDownItems.Add(naissoostMenuItem);
+            sugu.DropDownItems.Add(meessoostMenuItem);
+
+            ms.Items.Add(font);
+            ms.Items.Add(sugu);
             this.MainMenuStrip = ms;
             this.Controls.Add(ms);
 
             this.Controls.Add(tlp);
+        }
+
+        private void MeessoostMenuItem_Click(object? sender, EventArgs e)
+        {
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label labelsmail)
+                {
+                    labelsmail.Text = string.Empty; 
+                    labelsmail.ForeColor = labelsmail.BackColor;   
+                }
+            }
+            stiilis = "mees";
+            AssignIconsToSquares(icons_mees, Color.PowderBlue);
+        }
+
+        private void NaissoostMenuItem_Click(object? sender, EventArgs e)
+        {
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label labelsmail)
+                {
+                    labelsmail.Text = string.Empty; 
+                    labelsmail.ForeColor = labelsmail.BackColor; 
+                }
+            }
+            stiilis = "naine";
+            AssignIconsToSquares(icons_naine, Color.HotPink);
         }
 
         private void ArialMenuItem_Click(object sender, EventArgs e)
@@ -146,7 +184,6 @@ namespace Elemendid_vormis_TARpv23
             {
                 if (control is Label labelsmail)
                 {
-
                     labelsmail.Font = new Font("Arial", 48, FontStyle.Bold);
                 }
             }
@@ -159,25 +196,10 @@ namespace Elemendid_vormis_TARpv23
             {
                 if (control is Label labelsmail)
                 {
-              
                     labelsmail.Font = new Font("Wingdings", 48, FontStyle.Bold);
                 }
             }
            
-        }
-
-        private void Varv_Click(object? sender, EventArgs e)
-        {
-
-            // Проходим через все метки в TableLayoutPanel и меняем их цвет
-            foreach (Control control in table.Controls)
-            {
-                if (control is Label labelsmail)
-                {
-                    // Генерируем новый случайный цвет и применяем к метке
-                    labelsmail.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-                }
-            }
         }
 
         private void Start_Click(object sender, EventArgs e)
@@ -189,7 +211,19 @@ namespace Elemendid_vormis_TARpv23
 
         private void StartGame()
         {
-            AssignIconsToSquares();
+            if (stiilis == "naine")
+            {
+                AssignIconsToSquares(icons_naine, Color.HotPink);
+            }
+            else if (stiilis == "mees")
+            {
+                AssignIconsToSquares(icons_mees, Color.PowderBlue);
+            }
+            else 
+            {
+                AssignIconsToSquares(icons, Color.CornflowerBlue);
+            }
+
             timeLeft = 60;
             time.Text = "Time Left: 60 seconds";
             gametimer.Start();
@@ -279,17 +313,29 @@ namespace Elemendid_vormis_TARpv23
             }
         }
 
-        private void AssignIconsToSquares()
+        private void AssignIconsToSquares(List<string> icons, Color backColor)
         {
+            List<string> list = new List<string>(icons);
+
+            // Перемешивание иконок
+            for (int i = 0; i < list.Count; i++)
+            {
+                int j = random.Next(i, list.Count);
+                string tagasi = list[i];
+                list[i] = list[j];
+                list[j] = tagasi; // Возвращаем сохраненное значение на позицию j
+            }
+
+            int iconsIndex = 0;
             foreach (Control control in table.Controls)
             {
                 Label iconLabel = control as Label;
                 if (iconLabel != null)
                 {
-                    int randomNumber = random.Next(icons.Count);
-                    iconLabel.Text = icons[randomNumber];
-                    iconLabel.ForeColor = iconLabel.BackColor;
-                    icons.RemoveAt(randomNumber);
+                    iconLabel.Text = list[iconsIndex];
+                    iconLabel.BackColor = backColor;
+                    iconLabel.ForeColor = iconLabel.BackColor; // Скрыть иконку
+                    iconsIndex++;
                 }
             }
         }
