@@ -13,12 +13,13 @@ namespace Elemendid_vormis_TARpv23
 {
     public partial class KolmVorm : Form
     {
+        List<string> tausta_varv = new List<string> { "Aquamarine", "Coral", "DarkSalmon", "Khaki", "LavenderBlush", "LightGreen" };
         List<string> actions = new List<string> { "+", "-", "*", "/" };
         Label time, plusLeftLabel, plusRightLabel, minusLeftLabel, minusRightLabel,
             multiplicationLeft, multiplicationRight, divisionLeft, divisionRight,
             equals, signs;
         TableLayoutPanel tlp;
-        Button close, start, alusta_otsast, varv;
+        Button close, start, alusta_otsast, varv, taustavarv;
         System.Windows.Forms.Timer timer;
         NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
@@ -255,11 +256,39 @@ namespace Elemendid_vormis_TARpv23
             varv.BackColor = Color.Plum;
             varv.Click += Varv_Click;
 
+            //Button - taustavarv
+            taustavarv = new Button();
+            taustavarv.Text = "Tausta varvi";
+            taustavarv.Font = new Font("Algerian", 18, FontStyle.Italic);
+            taustavarv.Height = 45;
+            taustavarv.Width = 200;
+            taustavarv.Location = new Point(450, 300);
+            taustavarv.BackColor = Color.Plum;
+            taustavarv.Click += Taustavarv_Click;
+
+
+
             //Timer
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
 
+            //MenuStrip
+            MenuStrip ms = new MenuStrip();
+            ToolStripMenuItem ajastus = new ToolStripMenuItem("Ajastus");
+            ToolStripMenuItem nelikümmend = new ToolStripMenuItem("Nelikümmend", null, new EventHandler(NelikümmendMenuItem_Click));
+            ToolStripMenuItem kolmkümmend = new ToolStripMenuItem("Kolmkümmend", null, new EventHandler(KolmkümmendMenuItem_Click));
+            ToolStripMenuItem kakskümmend = new ToolStripMenuItem("kakskümmend", null, new EventHandler(kakskümmendMenuItem_Click));
+            ToolStripMenuItem minut = new ToolStripMenuItem("Minut", null, new EventHandler(MinutMenuItem_Click));
+
+            ajastus.DropDownItems.Add(nelikümmend);
+            ajastus.DropDownItems.Add(kolmkümmend);
+            ajastus.DropDownItems.Add(kakskümmend);
+            ajastus.DropDownItems.Add(minut);
+
+            ms.Items.Add(ajastus);
+            this.MainMenuStrip = ms;
+            this.Controls.Add(ms);
 
             this.Controls.Add(flp);
             this.Controls.Add(time);
@@ -267,6 +296,47 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(close);
             this.Controls.Add(alusta_otsast);
             this.Controls.Add(varv);
+            this.Controls.Add(taustavarv);
+        }
+
+        private void NelikümmendMenuItem_Click(object? sender, EventArgs e)
+        {
+            NewTime(40);
+            timeLeft = 40;
+            time.Text = "Time Left: 40 seconds";
+        }
+        private void KolmkümmendMenuItem_Click(object? sender, EventArgs e)
+        {
+            NewTime(30);
+            timeLeft = 30;
+            time.Text = "Time Left: 30 seconds";
+        }
+        private void kakskümmendMenuItem_Click(object? sender, EventArgs e)
+        {
+            NewTime(20);
+            timeLeft = 20;
+            time.Text = "Time Left: 20 seconds";
+        }
+        private void MinutMenuItem_Click(object? sender, EventArgs e)
+        {
+            NewTime(60);
+            timeLeft = 60;
+            time.Text = "Time Left: 60 seconds";
+        }
+
+        private void NewTime(int seconds)
+        {
+            timeLeft = seconds;
+            time.Text = $"Time Left: {timeLeft} seconds";
+
+            timer.Stop();
+            start.Enabled = true;
+        }
+
+        private void Taustavarv_Click(object? sender, EventArgs e)
+        {
+            int randomIndex = random.Next(tausta_varv.Count);
+            this.BackColor = Color.FromName(tausta_varv[randomIndex]);
         }
 
         private void Varv_Click(object? sender, EventArgs e)
@@ -274,7 +344,6 @@ namespace Elemendid_vormis_TARpv23
             Random random = new Random();
 
             // Генерируем случайные цвета для элементов
-            this.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             tlp.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
 
             // Меняем цвета кнопок
@@ -314,8 +383,6 @@ namespace Elemendid_vormis_TARpv23
 
             // Останавливаем таймер и сбрасываем время
             timer.Stop();
-            timeLeft = 40;
-            time.Text = "Time Left: 40 seconds";
             start.Enabled = true;
         }
 
@@ -337,7 +404,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 timer.Stop();
                 time.Text = "Aeg on läbi!";
-                MessageBox.Show("Sa ei jõudnud aegade lõpuni:(", "Vabandust!");
+                MessageBox.Show("Sa ei jõudnud aegade lõpuni");
                 sum.Value = addend1 + addend2;
                 difference.Value = minuend - subtrahend;
                 product.Value = multiplicand * multiplier;
@@ -442,8 +509,6 @@ namespace Elemendid_vormis_TARpv23
             quotient.Value = 0;
 
             // Start the timer.
-            timeLeft = 40;
-            time.Text = "Time Left: 40 seconds";
             timer.Start();
         }
         // Check the answers to see if the user got everything right.

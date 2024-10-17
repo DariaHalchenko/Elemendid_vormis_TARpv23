@@ -85,7 +85,7 @@ namespace Elemendid_vormis_TARpv23
 
         private void Btn3_Click(object? sender, EventArgs e)
         {
-            NeljasVorm neljasVorm = new NeljasVorm(800, 800);
+            NeljasVorm neljasVorm = new NeljasVorm(750, 800);
             neljasVorm.Show();
             btn3.BackColor = Color.RosyBrown;
         }

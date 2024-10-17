@@ -22,6 +22,7 @@ namespace Elemendid_vormis_TARpv23
         OpenFileDialog openfiledialog;
         ColorDialog colordialog;
         Image image;
+        Panel raami, sisepiir;
 
         public TeineVorm(int w, int h)
         {
@@ -33,13 +34,25 @@ namespace Elemendid_vormis_TARpv23
             tlp = new TableLayoutPanel();
             tlp.Dock = DockStyle.Fill;
 
+            raami = new Panel();
+            raami.BackColor = Color.BlanchedAlmond;
+            raami.Dock = DockStyle.Fill;
+            raami.Padding = new Padding(25);
+
+            sisepiir = new Panel();
+            sisepiir.BackColor = Color.White;
+            sisepiir.Dock = DockStyle.Fill;
             // PictureBox
             picturebox = new PictureBox();
             picturebox.Dock = DockStyle.Fill;
             picturebox.BorderStyle = BorderStyle.Fixed3D;
-            picturebox.SizeMode = PictureBoxSizeMode.Zoom;
-            tlp.Controls.Add(picturebox);
-            tlp.SetColumnSpan(picturebox, 2);
+            picturebox.SizeMode = PictureBoxSizeMode.CenterImage;
+
+            sisepiir.Controls.Add(picturebox);
+            raami.Controls.Add(sisepiir);
+
+            tlp.Controls.Add(raami);
+            tlp.SetColumnSpan(raami, 2);
 
             // CheckBox
             chk = new CheckBox();
@@ -80,7 +93,7 @@ namespace Elemendid_vormis_TARpv23
             left = new Button();
             left.Text = "Pööra vasakule";
             left.AutoSize = true;
-            left.Click += Left_Click; 
+            left.Click += Left_Click;
 
             //Button - right
             right = new Button();
@@ -103,7 +116,7 @@ namespace Elemendid_vormis_TARpv23
             flp.Controls.Add(filter);
             flp.Controls.Add(sap);
             flp.Controls.Add(close);
-            
+
 
             //  Lisa ColumnStyles
             tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15));
@@ -190,4 +203,3 @@ namespace Elemendid_vormis_TARpv23
         }
     }
 }
-
