@@ -22,7 +22,6 @@ namespace Elemendid_vormis_TARpv23
         OpenFileDialog openfiledialog;
         ColorDialog colordialog;
         Image image;
-        Panel raami, sisepiir;
 
         public TeineVorm(int w, int h)
         {
@@ -34,25 +33,15 @@ namespace Elemendid_vormis_TARpv23
             tlp = new TableLayoutPanel();
             tlp.Dock = DockStyle.Fill;
 
-            raami = new Panel();
-            raami.BackColor = Color.BlanchedAlmond;
-            raami.Dock = DockStyle.Fill;
-            raami.Padding = new Padding(25);
-
-            sisepiir = new Panel();
-            sisepiir.BackColor = Color.White;
-            sisepiir.Dock = DockStyle.Fill;
+            
             // PictureBox
             picturebox = new PictureBox();
             picturebox.Dock = DockStyle.Fill;
             picturebox.BorderStyle = BorderStyle.Fixed3D;
             picturebox.SizeMode = PictureBoxSizeMode.CenterImage;
 
-            sisepiir.Controls.Add(picturebox);
-            raami.Controls.Add(sisepiir);
-
-            tlp.Controls.Add(raami);
-            tlp.SetColumnSpan(raami, 2);
+            tlp.Controls.Add(picturebox);
+            tlp.SetColumnSpan(picturebox, 2);
 
             // CheckBox
             chk = new CheckBox();
@@ -175,6 +164,7 @@ namespace Elemendid_vormis_TARpv23
         private void Chk_CheckedChanged(object? sender, EventArgs e)
         {
             picturebox.SizeMode = chk.Checked ? PictureBoxSizeMode.StretchImage : PictureBoxSizeMode.Normal;
+
         }
 
         private void Sap_Click(object? sender, EventArgs e)

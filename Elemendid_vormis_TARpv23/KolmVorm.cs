@@ -19,7 +19,7 @@ namespace Elemendid_vormis_TARpv23
             multiplicationLeft, multiplicationRight, divisionLeft, divisionRight,
             equals, signs;
         TableLayoutPanel tlp;
-        Button close, start, alusta_otsast, varv, taustavarv;
+        Button close, start, alusta_otsast, varv, taustavarv, giveUp;
         System.Windows.Forms.Timer timer;
         NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
@@ -266,6 +266,18 @@ namespace Elemendid_vormis_TARpv23
             taustavarv.BackColor = Color.Plum;
             taustavarv.Click += Taustavarv_Click;
 
+            //nupp giveUp
+            giveUp = new Button();
+            giveUp.Text = "Give up";
+            giveUp.Font = new Font("Harlow Solid Italic", 14);
+            giveUp.BackColor = Color.DarkRed;
+            giveUp.AutoSize = true;
+            giveUp.Location = new Point(600, 295);
+            giveUp.TabIndex = 0;
+            giveUp.Click += GiveUp_Click; ;
+
+            this.Controls.Add(giveUp);
+
 
 
             //Timer
@@ -297,6 +309,12 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(alusta_otsast);
             this.Controls.Add(varv);
             this.Controls.Add(taustavarv);
+        }
+
+        private void GiveUp_Click(object? sender, EventArgs e)
+        {
+            timer1.Stop();
+            MessageBox.Show("You decided to give up! Better luck next time.");
         }
 
         private void NelikümmendMenuItem_Click(object? sender, EventArgs e)
