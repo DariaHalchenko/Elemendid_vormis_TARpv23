@@ -13,13 +13,13 @@ namespace Elemendid_vormis_TARpv23
 {
     public partial class KolmVorm : Form
     {
-        List<string> tausta_varv = new List<string> { "Aquamarine", "Coral", "DarkSalmon", "Khaki", "LavenderBlush", "LightGreen" };
+        List<string> tausta_varv = new List<string> { "Aquamarine", "Coral", "DarkSalmon", "Khaki", "Aqua", "LightGreen", "MediumPurple", "MediumVioletRed" };
         List<string> actions = new List<string> { "+", "-", "*", "/" };
         Label time, plusLeftLabel, plusRightLabel, minusLeftLabel, minusRightLabel,
             multiplicationLeft, multiplicationRight, divisionLeft, divisionRight,
             equals, signs;
         TableLayoutPanel tlp;
-        Button close, start, alusta_otsast, varv, taustavarv, giveUp;
+        Button close, start, alusta_otsast, varv, taustavarv, loobuma;
         System.Windows.Forms.Timer timer;
         NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
@@ -262,23 +262,19 @@ namespace Elemendid_vormis_TARpv23
             taustavarv.Font = new Font("Algerian", 18, FontStyle.Italic);
             taustavarv.Height = 45;
             taustavarv.Width = 200;
-            taustavarv.Location = new Point(450, 300);
+            taustavarv.Location = new Point(480, 300);
             taustavarv.BackColor = Color.Plum;
             taustavarv.Click += Taustavarv_Click;
 
-            //nupp giveUp
-            giveUp = new Button();
-            giveUp.Text = "Give up";
-            giveUp.Font = new Font("Harlow Solid Italic", 14);
-            giveUp.BackColor = Color.DarkRed;
-            giveUp.AutoSize = true;
-            giveUp.Location = new Point(600, 295);
-            giveUp.TabIndex = 0;
-            giveUp.Click += GiveUp_Click; ;
-
-            this.Controls.Add(giveUp);
-
-
+            //nupp loobuma
+            loobuma = new Button();
+            loobuma.Text = "Loobuma";
+            loobuma.Font = new Font("Algerian", 18, FontStyle.Italic);
+            loobuma.Height = 45;
+            loobuma.Width = 200;
+            loobuma.Location = new Point(480, 350);
+            loobuma.BackColor = Color.Plum;
+            loobuma.Click += Loobuma_Click;
 
             //Timer
             timer = new System.Windows.Forms.Timer();
@@ -290,7 +286,7 @@ namespace Elemendid_vormis_TARpv23
             ToolStripMenuItem ajastus = new ToolStripMenuItem("Ajastus");
             ToolStripMenuItem nelikümmend = new ToolStripMenuItem("Nelikümmend", null, new EventHandler(NelikümmendMenuItem_Click));
             ToolStripMenuItem kolmkümmend = new ToolStripMenuItem("Kolmkümmend", null, new EventHandler(KolmkümmendMenuItem_Click));
-            ToolStripMenuItem kakskümmend = new ToolStripMenuItem("kakskümmend", null, new EventHandler(kakskümmendMenuItem_Click));
+            ToolStripMenuItem kakskümmend = new ToolStripMenuItem("Kakskümmend", null, new EventHandler(KakskümmendMenuItem_Click));
             ToolStripMenuItem minut = new ToolStripMenuItem("Minut", null, new EventHandler(MinutMenuItem_Click));
 
             ajastus.DropDownItems.Add(nelikümmend);
@@ -309,12 +305,27 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(alusta_otsast);
             this.Controls.Add(varv);
             this.Controls.Add(taustavarv);
+            this.Controls.Add(loobuma);
         }
 
-        private void GiveUp_Click(object? sender, EventArgs e)
+        private void Loobuma_Click(object? sender, EventArgs e)
         {
-            timer1.Stop();
-            MessageBox.Show("You decided to give up! Better luck next time.");
+            // Останавливаем таймер
+            timer.Stop();
+
+            // Показать правильные ответы
+            sum.Value = addend1 + addend2;
+            difference.Value = minuend - subtrahend;
+            product.Value = multiplicand * multiplier;
+            quotient.Value = dividend / divisor;
+
+            // Показать сообщение
+            MessageBox.Show("Otsustasid alla anda! Järgmine kord veab.\n" +
+                   $"Õiged vastused:\n" +
+                   $"{addend1} + {addend2} = {addend1 + addend2}\n" +
+                   $"{minuend} - {subtrahend} = {minuend - subtrahend}\n" +
+                   $"{multiplicand} * {multiplier} = {multiplicand * multiplier}\n" +
+                   $"{dividend} / {divisor} = {dividend / divisor}");
         }
 
         private void NelikümmendMenuItem_Click(object? sender, EventArgs e)
@@ -329,7 +340,7 @@ namespace Elemendid_vormis_TARpv23
             timeLeft = 30;
             time.Text = "Time Left: 30 seconds";
         }
-        private void kakskümmendMenuItem_Click(object? sender, EventArgs e)
+        private void KakskümmendMenuItem_Click(object? sender, EventArgs e)
         {
             NewTime(20);
             timeLeft = 20;

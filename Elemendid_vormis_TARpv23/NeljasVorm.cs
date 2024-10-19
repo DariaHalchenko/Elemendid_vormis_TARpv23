@@ -28,9 +28,9 @@ namespace Elemendid_vormis_TARpv23
         Label firstClicked = null;
         Label secondClicked = null;
 
-        System.Windows.Forms.Timer timer, gametimer;
+        System.Windows.Forms.Timer timer, gametimer, timer2;
 
-        Button close, start, alusta_otsast;
+        Button close, start, alusta_otsast, naita_ikoone;
 
         FlowLayoutPanel flp;
 
@@ -92,18 +92,31 @@ namespace Elemendid_vormis_TARpv23
             close.Text = "Close";
             close.Font = new Font("Algerian", 18, FontStyle.Italic);
             close.Height = 50;
-            close.Width = 100;
+            close.Width = 150;
+            close.BackColor = Color.Plum;
             close.AutoSize = true;
             close.Click += Close_Click;
 
             start = new Button();
             start.Text = "Start";
             start.Font = new Font("Algerian", 18, FontStyle.Italic);
-            start.Height = 60;
+            start.Height = 50;
             start.Width = 150;
             start.AutoSize = true;
+            start.BackColor = Color.Plum;
             start.Enabled = false;
             start.Click += Start_Click;
+
+            naita_ikoone = new Button();
+            naita_ikoone.Text = "Näita ikoone";
+            naita_ikoone.Font = new Font("Algerian", 18, FontStyle.Italic);
+            naita_ikoone.Height = 50;
+            naita_ikoone.Width = 150;
+            naita_ikoone.AutoSize = true;
+            naita_ikoone.BackColor = Color.Plum;
+            naita_ikoone.Click += Naita_ikoone_Click;
+
+
 
             flp = new FlowLayoutPanel();
             flp.Dock = DockStyle.Bottom;
@@ -114,6 +127,7 @@ namespace Elemendid_vormis_TARpv23
             flp.Controls.Add(katsedlabel);
             flp.Controls.Add(start);
             flp.Controls.Add(close);
+            flp.Controls.Add(naita_ikoone);
 
             tlp.Controls.Add(table); // Игровое поле сверху
             tlp.Controls.Add(flp); // Таймер и кнопки снизу
@@ -145,6 +159,11 @@ namespace Elemendid_vormis_TARpv23
             gametimer.Interval = 1000;
             gametimer.Tick += Gametimer_Tick;
 
+            // Инициализация таймера отображения иконок
+            timer2 = new System.Windows.Forms.Timer();
+            timer2.Interval = 10000; // 10 секунд (10000 миллисекунд)
+            timer2.Tick += Timer2_Tick; ;
+
             // Создание MenuStrip 
             MenuStrip ms = new MenuStrip();
             ToolStripMenuItem font = new ToolStripMenuItem("Font");
@@ -162,8 +181,6 @@ namespace Elemendid_vormis_TARpv23
             ToolStripMenuItem indianRedGreenMenuItem = new ToolStripMenuItem("IndianRed", null, new EventHandler(IndianRedMenuItem_Click));
             ToolStripMenuItem crimsonMenuItem = new ToolStripMenuItem("Crimson", null, new EventHandler(CrimsonMenuItem_Click));
             ToolStripMenuItem orchidMenuItem = new ToolStripMenuItem("SpringGreen", null, new EventHandler(OrchidMenuItem_Click));
-
-            
 
             // Добавление подменю
             font.DropDownItems.Add(arialMenuItem);
@@ -186,6 +203,36 @@ namespace Elemendid_vormis_TARpv23
             this.Controls.Add(ms);
 
             this.Controls.Add(tlp);
+        }
+
+        private void Timer2_Tick(object? sender, EventArgs e)
+        {
+            // Остановить таймер, чтобы он не продолжал идти
+            timer2.Stop();
+
+            // Скрыть все иконки снова
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label iconLabel)
+                {
+                    iconLabel.ForeColor = iconLabel.BackColor; // Скрыть иконку, сделав текст цветом фона
+                }
+            }
+        }
+
+        private void Naita_ikoone_Click(object? sender, EventArgs e)
+        {
+            // Отобразить все иконки
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label iconLabel)
+                {
+                    iconLabel.ForeColor = Color.Black; // Показать иконку, установив цвет текста
+                }
+            }
+
+            // Запустить таймер на 10 секунд
+            timer2.Start();
         }
 
         private void SalmonMenuItem_Click(object? sender, EventArgs e)
@@ -252,7 +299,6 @@ namespace Elemendid_vormis_TARpv23
         {
             StartGame();
             start.Enabled = false;
-            start.BackColor = Color.BlueViolet;
         }
 
         private void StartGame()
