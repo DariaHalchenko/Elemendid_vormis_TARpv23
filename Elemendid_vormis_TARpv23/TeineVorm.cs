@@ -136,8 +136,6 @@ namespace Elemendid_vormis_TARpv23
             flp.Controls.Add(sap);
             flp.Controls.Add(close);
             flp.Controls.Add(stbc);
-           
-
 
             //  Lisa ColumnStyles
             tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15));
@@ -157,84 +155,144 @@ namespace Elemendid_vormis_TARpv23
             colordialog = new ColorDialog();
         }
 
-        // искажает изображение, создавая волнообразные линие
+        //moonutab pilti, tekitades lainekujulisi liine
+        //искажает изображение, создавая волнообразные линие
         private void Pildi_moonutamine_Click(object? sender, EventArgs e)
         {
+            // Kontrollib, kas pilt on üles laetud
+            // Проверяет загружено ли изображение 
             if (picturebox.Image != null)
             {
                 Bitmap bmp = new Bitmap(picturebox.Image);
                 Bitmap moonutatud_pilt = new Bitmap(bmp.Width, bmp.Height);
 
+                //Kolitakse iga pikslit y koordinaatide järgi
+                //Перебирает каждый пиксель по координатам y
                 for (int y = 0; y < bmp.Height; y++)
                 {
+                    //Kerib iga piksli läbi x koordinaatide järgi
+                    //Перебирает каждый пиксель по координатам x
                     for (int x = 0; x < bmp.Width; x++)
                     {
-                        // Искажаем пиксели
-                        int niheX = (int)(10 * Math.Sin(y / 10.0));
+                        // Otsime piksleid, tekitades X-telje nihke
+                        // Искажаем пиксели, создавая сдвиг по оси X
+                        int niheX = (int)(10 * Math.Sin(y / 10.0)); //Math.Sin - синусоидальная функция
+
+                        //uus piksli asend X telje järgi ja lisame nihke
+                        //новое положение пикселя по оси X и  добавляем сдвиг 
                         int uusX = x + niheX;
 
+                        //Kontrollime, kas uus asend on pildi piirides
+                        //Проверяем, находиться ли новое положение в границах изображения
                         if (uusX >= 0 && uusX < bmp.Width)
                         {
+                            // Viime piksli lähtest uude, moonutatud asendisse
+                            // Переносим пиксель из исходного в новое, искаженное положение
                             moonutatud_pilt.SetPixel(uusX, y, bmp.GetPixel(x, y));
                         }
                     }
                 }
+                // Paigaldame moonutatud pildi
+                // Устанавливаем искаженное изображение
                 picturebox.Image = moonutatud_pilt;
             }
         }
 
-        //инвертирует цвета на изображении.
+        //inverteerib pildil olevaid värve
+        //инвертирует цвета на изображении
         private void Inversioon_Click(object? sender, EventArgs e)
         {
+            // Kontrollib, kas pilt on üles laetud
+            // Проверяет загружено ли изображение 
             if (picturebox.Image != null)
             {
                 Bitmap bmp = new Bitmap(picturebox.Image);
                 Bitmap piltide_inversioon = new Bitmap(bmp.Width, bmp.Height);
 
+                //Kerib iga piksli läbi x koordinaatide järgi
+                //Перебирает каждый пиксель по координатам x
                 for (int x = 0; x < bmp.Width; x++)
                 {
+                    //Kolitakse iga pikslit y koordinaatide järgi
+                    //Перебирает каждый пиксель по координатам y
                     for (int y = 0; y < bmp.Height; y++)
                     {
+                        // Saame lähtepiksli värvi
+                        // Получаем цвет исходного пикселя
                         Color originaalvarv = bmp.GetPixel(x, y);
-                        Color inversiooni_varv = Color.FromArgb(255 - originaalvarv.R, 255 - originaalvarv.G, 255 - originalvarv.B);
+
+                        // Inverteerime värvi punasest komponendist, rohelisest ja sinisest 
+                        // Инвертируем цвет из красного компонента, зеленого и синего 
+                        Color inversiooni_varv = Color.FromArgb(255 - originaalvarv.R, 255 - originaalvarv.G, 255 - originaalvarv.B); //255 tähendab maksimaalset värviküllust (255 означает максимальное насыщенность цвета)
+
+                        // Paigaldame inverteeritud värvi
+                        // Устанавливаем инвертированный цвет
                         piltide_inversioon.SetPixel(x, y, inversiooni_varv);
                     }
                 }
+                // Paigaldame inverteeritud pildi
+                // Устанавливаем инвертированное изображение
                 picturebox.Image = piltide_inversioon;
             }
         }
 
+        // Salvestab pildi faili
+        // Сохраняет изображение в файл
         private void Salvesta_pilt_Click(object? sender, EventArgs e)
         {
             if (picturebox.Image != null)
             {
+                // Faili salvestamiseks dialoogiakna loomine
+                // Создание диалогового окна для сохранения файла
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "JPEG Files (*.jpg)|*.jpg|PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|All files (*.*)|*.*";
+                //dialoogiakna pealkiri
+                //заголовок диалогового окна
                 saveFileDialog.Title = "Salvesta pilt";
+
+                //Säilitame pildi (Сохраняем изображение)
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     picturebox.Image.Save(saveFileDialog.FileName);
                 }
             }
+            //kui pilti pole näitab sõnumit
+            //если нет изображения  показывает сообщение
             else
             {
                 MessageBox.Show("Puudub pilt, mida salvestada.");
             }
         }
 
+        //muundab pildi punaseks ja mustaks
+        //преобразует изображение в красное и черное
         private void Filter_Click(object? sender, EventArgs e)
         {
             Bitmap redBlackEffect = (Bitmap)picturebox.Image.Clone();
+            //Kolime üle kõik pildipikslid
+            //Перебираем все пиксели изображения
             for (int yCoordinate = 0; yCoordinate < redBlackEffect.Height; yCoordinate++)
             {
                 for (int xCoordinate = 0; xCoordinate < redBlackEffect.Width; xCoordinate++)
                 {
+                    // Saame piksli praeguse värvi
+                    // Получаем текущий цвет пикселя
                     Color color = redBlackEffect.GetPixel(xCoordinate, yCoordinate);
+                    
+                    //Loome halli (musta) värvi isa 
+                    //Создаем отенок серого (черного) цвета 
                     double grayColor = ((double)(color.R + color.G + color.B)) / 3.0d;
-                    Color sepia = Color.FromArgb((byte)grayColor, (byte)(0), (byte)(0));
-                    redBlackEffect.SetPixel(xCoordinate, yCoordinate, sepia);
+                    
+                    //Loome punast värvi isa 
+                    //Создаем отенок красного цвета 
+                    Color red = Color.FromArgb((byte)grayColor, (byte)(0), (byte)(0));
+                    
+                    // Paigaldame pikslite uue värvi
+                    // Устанавливаем новый цвет пикселей
+                    redBlackEffect.SetPixel(xCoordinate, yCoordinate, red);
                 }
             }
+            //Uuendame pilti (Обновляем изображение)
             picturebox.Image = redBlackEffect;
         }
 
@@ -242,9 +300,10 @@ namespace Elemendid_vormis_TARpv23
         {
             if (image != null)
             {
+                // Pöörame pildi 90 kraadi peale
                 // Поворачиваем изображение на 90 градусов
                 image.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                picturebox.Image = image; // Обновляем PictureBox
+                picturebox.Image = image; // Uuendame (Обновляем)
             }
         }
 
@@ -252,9 +311,10 @@ namespace Elemendid_vormis_TARpv23
         {
             if (image != null)
             {
+                // Pöörame pildi 270 kraadi peale
                 // Поворачиваем изображение на 270 градусов
                 image.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                picturebox.Image = image; // Обновляем PictureBox
+                picturebox.Image = image; //Uuendame (Обновляем)
             }
         }
 
@@ -268,8 +328,8 @@ namespace Elemendid_vormis_TARpv23
         {
             if (openfiledialog.ShowDialog() == DialogResult.OK)
             {
-                image = Image.FromFile(openfiledialog.FileName); // Сохраняем изображение
-                picturebox.Image = image; // Показываем изображение
+                image = Image.FromFile(openfiledialog.FileName); 
+                picturebox.Image = image; 
             }
         }
 
