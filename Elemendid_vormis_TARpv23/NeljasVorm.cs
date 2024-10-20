@@ -48,11 +48,13 @@ namespace Elemendid_vormis_TARpv23
             this.Width = w;
             this.Text = "Matching Game";
 
+            //TableLayoutPanel - tbl
             tlp = new TableLayoutPanel();
             tlp.Dock = DockStyle.Fill;
             tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 90));
             tlp.RowStyles.Add(new ColumnStyle(SizeType.Percent, 10));
 
+            //TableLayoutPanel - table
             table = new TableLayoutPanel();
             table.Dock = DockStyle.Fill;
             table.BackColor = Color.White;
@@ -60,19 +62,23 @@ namespace Elemendid_vormis_TARpv23
             table.ColumnCount = 4;
             table.RowCount = 4;
 
-            
+            // Puhastame veergude ja ridade praegused stiilid (Очищаем текущие стили столбцов и строк)
             table.ColumnStyles.Clear();
             table.RowStyles.Clear();
 
+            // Seadistame igale tulbale stiili (Устанавливаем стиль для каждого столбца)
             for (int i = 0; i < table.ColumnCount; i++)
             {
                 table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
             }
+
+            // Seadistame igale reale stiili (Устанавливаем стиль для каждой строки)
             for (int i = 0; i < table.RowCount; i++)
             {
                 table.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
             }
 
+            //Label - time
             time = new Label();
             time.AutoSize = true;
             time.Text = "Time Left: 60 seconds";
@@ -80,6 +86,7 @@ namespace Elemendid_vormis_TARpv23
             time.TextAlign = ContentAlignment.MiddleCenter;
             time.Dock = DockStyle.Top;
 
+            //Label - katsedlabel
             katsedlabel = new Label();
             katsedlabel.AutoSize = true;
             katsedlabel.Text = "Katsed: 0";
@@ -87,7 +94,7 @@ namespace Elemendid_vormis_TARpv23
             katsedlabel.TextAlign = ContentAlignment.MiddleCenter;
             katsedlabel.Dock = DockStyle.Top;
 
-
+            //Button - close
             close = new Button();
             close.Text = "Close";
             close.Font = new Font("Algerian", 18, FontStyle.Italic);
@@ -97,6 +104,7 @@ namespace Elemendid_vormis_TARpv23
             close.AutoSize = true;
             close.Click += Close_Click;
 
+            //Button - start
             start = new Button();
             start.Text = "Start";
             start.Font = new Font("Algerian", 18, FontStyle.Italic);
@@ -107,6 +115,7 @@ namespace Elemendid_vormis_TARpv23
             start.Enabled = false;
             start.Click += Start_Click;
 
+            //Button - naita ikoone
             naita_ikoone = new Button();
             naita_ikoone.Text = "Näita ikoone";
             naita_ikoone.Font = new Font("Algerian", 18, FontStyle.Italic);
@@ -116,22 +125,23 @@ namespace Elemendid_vormis_TARpv23
             naita_ikoone.BackColor = Color.Plum;
             naita_ikoone.Click += Naita_ikoone_Click;
 
-
-
+            //FlowLayoutPanel - flp
             flp = new FlowLayoutPanel();
             flp.Dock = DockStyle.Bottom;
             flp.FlowDirection = FlowDirection.TopDown;
             flp.AutoSize = true;
 
+            //Lisame juhtelemendid (Добавляем элементы управления)
             flp.Controls.Add(time);
             flp.Controls.Add(katsedlabel);
             flp.Controls.Add(start);
             flp.Controls.Add(close);
             flp.Controls.Add(naita_ikoone);
 
-            tlp.Controls.Add(table); // Игровое поле сверху
-            tlp.Controls.Add(flp); // Таймер и кнопки снизу
+            tlp.Controls.Add(table); //Mänguväli ülevalt (Игровое поле сверху)
+            tlp.Controls.Add(flp); //Taimer ja alt nupud (Таймер и кнопки снизу)
 
+            //Loome võrgu (Создаем сетку)
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -141,8 +151,8 @@ namespace Elemendid_vormis_TARpv23
                     labelsmail[i].AutoSize = false;
                     labelsmail[i].Dock = DockStyle.Fill;
                     labelsmail[i].TextAlign = ContentAlignment.MiddleCenter;
-                    labelsmail[i].Margin = new Padding(2); // Устанавливаем отступы на 2
-                    labelsmail[i].Padding = new Padding(2); // Устанавливаем отступы на 2
+                    labelsmail[i].Margin = new Padding(2); //Paigaldame tagasilöögid 2 peale (Устанавливаем отступы на 2)
+                    labelsmail[i].Padding = new Padding(2); //Paigaldame tagasilöögid 2 peale (Устанавливаем отступы на 2)
 
                     table.Controls.Add(labelsmail[i], j, i);
                     labelsmail[i].Click += Game_Click;
@@ -150,21 +160,23 @@ namespace Elemendid_vormis_TARpv23
             }
 
 
-
+            // Loome  timer
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 750;
             timer.Tick += Timer_Tick;
 
+            // Loome gametimer
             gametimer = new System.Windows.Forms.Timer();
             gametimer.Interval = 1000;
             gametimer.Tick += Gametimer_Tick;
 
+            //Ikooni kuvamise taimeri initsialiseerimine
             // Инициализация таймера отображения иконок
             timer2 = new System.Windows.Forms.Timer();
-            timer2.Interval = 10000; // 10 секунд (10000 миллисекунд)
+            timer2.Interval = 10000; 
             timer2.Tick += Timer2_Tick; ;
 
-            // Создание MenuStrip 
+            // Loome MenuStrip 
             MenuStrip ms = new MenuStrip();
             ToolStripMenuItem font = new ToolStripMenuItem("Font");
             ToolStripMenuItem arialMenuItem = new ToolStripMenuItem("Arial", null, new EventHandler(ArialMenuItem_Click));
@@ -182,7 +194,7 @@ namespace Elemendid_vormis_TARpv23
             ToolStripMenuItem crimsonMenuItem = new ToolStripMenuItem("Crimson", null, new EventHandler(CrimsonMenuItem_Click));
             ToolStripMenuItem orchidMenuItem = new ToolStripMenuItem("SpringGreen", null, new EventHandler(OrchidMenuItem_Click));
 
-            // Добавление подменю
+            //Alammenüü lisamine (Добавление подменю)
             font.DropDownItems.Add(arialMenuItem);
             font.DropDownItems.Add(wingdingsMenuItem);
 
@@ -207,31 +219,30 @@ namespace Elemendid_vormis_TARpv23
 
         private void Timer2_Tick(object? sender, EventArgs e)
         {
-            // Остановить таймер, чтобы он не продолжал идти
+            // Peata taimer (Остановить таймер)
             timer2.Stop();
 
-            // Скрыть все иконки снова
+            //Peida kõik ikoonid uuesti (Скрыть все иконки снова)
             foreach (Control control in table.Controls)
             {
                 if (control is Label iconLabel)
                 {
-                    iconLabel.ForeColor = iconLabel.BackColor; // Скрыть иконку, сделав текст цветом фона
+                    iconLabel.ForeColor = iconLabel.BackColor; 
                 }
             }
         }
 
         private void Naita_ikoone_Click(object? sender, EventArgs e)
         {
-            // Отобразить все иконки
+            //Kuva kõik ikoonid (Отобразить все иконки)
             foreach (Control control in table.Controls)
             {
                 if (control is Label iconLabel)
                 {
-                    iconLabel.ForeColor = Color.Black; // Показать иконку, установив цвет текста
+                    iconLabel.ForeColor = Color.Black; //Kuva ikoon (Показать иконку)
                 }
             }
-
-            // Запустить таймер на 10 секунд
+            //Käivita taimer 10 sekundiks (Запустить таймер на 10 секунд)
             timer2.Start();
         }
 
@@ -257,15 +268,18 @@ namespace Elemendid_vormis_TARpv23
             this.BackColor = Color.Orchid;
         }
 
+        //kutsume meetodi välja - mees (вызываем метод - mees)
         private void MeessoostMenuItem_Click(object? sender, EventArgs e)
         {
             stiilis = "mees";
         }
 
+        //kutsume meetodi välja - naine (вызываем метод - naine)
         private void NaissoostMenuItem_Click(object? sender, EventArgs e)
         {
             stiilis = "naine";
         }
+        //kutsume meetodi välja - tutorial (вызываем метод - tutorial)
         private void TutorialMenuItem_Click(object? sender, EventArgs e)
         {
             stiilis = "tutorial";
@@ -273,11 +287,14 @@ namespace Elemendid_vormis_TARpv23
 
         private void ArialMenuItem_Click(object sender, EventArgs e)
         {
+            //Aktiveerime nupu - start (Активируем кнопку - start)
             start.Enabled = true;
+            // Läbime kõik tabelis olevad elemendid ( Проходим по всем элементам в таблице)
             foreach (Control control in table.Controls)
             {
                 if (control is Label iconLabel)
                 {
+                    //Paigaldame kirja (Устанавливаем шрифт)
                     iconLabel.Font = new Font("Arial", 48, FontStyle.Bold);
                 }
             }
@@ -285,11 +302,14 @@ namespace Elemendid_vormis_TARpv23
 
         private void WingdingsMenuItem_Click(object sender, EventArgs e)
         {
+            //Aktiveerime nupu - start (Активируем кнопку - start)
             start.Enabled = true;
+            // Läbime kõik tabelis olevad elemendid ( Проходим по всем элементам в таблице)
             foreach (Control control in table.Controls)
             {
                 if (control is Label iconLabel)
                 {
+                    //Paigaldame kirja (Устанавливаем шрифт)
                     iconLabel.Font = new Font("Wingdings", 48, FontStyle.Bold);
                 }
             }
@@ -303,16 +323,20 @@ namespace Elemendid_vormis_TARpv23
 
         private void StartGame()
         {
+            //Kontrollime, milline stiil on valitud (Проверяем, какой стиль выбран)
             if (stiilis == "naine")
             {
+                // Määrame ikoonid ja värvi (Назначаем иконки и цвет)
                 AssignIconsToSquares(icons_naine, Color.HotPink);
             }
             else if (stiilis == "mees")
             {
+                // Määrame ikoonid ja värvi (Назначаем иконки и цвет)
                 AssignIconsToSquares(icons_mees, Color.PowderBlue);
             }
             else if (stiilis == "tutorial")
             {
+                // Määrame ikoonid ja värvi (Назначаем иконки и цвет)
                 AssignIconsToSquares(icons, Color.CornflowerBlue);
             }
             else
@@ -344,7 +368,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 gametimer.Stop();
                 time.Text = "Aeg on läbi!";
-                MessageBox.Show("Sa ei jõudnud aegade lõpuni:(", "Vabandust!");
+                MessageBox.Show("Sa ei jõudnud aegade lõpuni");
                 start.Enabled = true;
             }
         }
@@ -420,13 +444,13 @@ namespace Elemendid_vormis_TARpv23
         {
             List<string> list = new List<string>(icons);
 
-            // Перемешивание иконок
+            //Ikooni segamine (Перемешивание иконок)
             for (int i = 0; i < list.Count; i++)
             {
                 int j = random.Next(i, list.Count);
                 string tagasi = list[i];
                 list[i] = list[j];
-                list[j] = tagasi; // Возвращаем сохраненное значение на позицию j
+                list[j] = tagasi; //Tagastame salvestatud väärtuse positsioonile  (Возвращаем сохраненное значение на позицию)
             }
 
             int iconsIndex = 0;
@@ -437,7 +461,7 @@ namespace Elemendid_vormis_TARpv23
                 {
                     iconLabel.Text = list[iconsIndex];
                     iconLabel.BackColor = backColor;
-                    iconLabel.ForeColor = iconLabel.BackColor; // Скрыть иконку
+                    iconLabel.ForeColor = iconLabel.BackColor; //Varja ikoon (Скрыть иконку)
                     iconsIndex++;
                 }
             }
