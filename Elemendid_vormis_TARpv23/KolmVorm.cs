@@ -24,26 +24,23 @@ namespace Elemendid_vormis_TARpv23
         NumericUpDown sum, difference, product, quotient;
         FlowLayoutPanel flp;
 
+        //Random numbrite tekkimiseks küsimärkide asemel
+        //Для появления рандомно чисел, вместо вопросительных знаков
         Random random = new Random();
 
-        //Для появления рандомных чисел, вместо вопросительных знаков
-        // These integer variables store the numbers 
-        // for the addition problem. 
+        //numbrid liitmisülesande jaoks (числа для задачи сложения) 
         int addend1;
         int addend2;
 
-        // These integer variables store the numbers 
-        // for the subtraction problem. 
+        //numbrid lahutusülesande jaoks (числа для задачи вычитания)
         int minuend;
         int subtrahend;
 
-        // These integer variables store the numbers 
-        // for the multiplication problem. 
+        //numbrid korrutusülesande jaoks (числа для задачи умножения)
         int multiplicand;
         int multiplier;
 
-        // These integer variables store the numbers 
-        // for the division problem. 
+        //numbrid jagamisülesande jaoks (числа для задачи деления)
         int dividend;
         int divisor;
 
@@ -64,10 +61,12 @@ namespace Elemendid_vormis_TARpv23
             tlp.ColumnCount = 5;
             tlp.RowCount = 4;
 
+            // Lisame stiilid 5 veerule (Добавляем стили для 5 столбцов)
             for (int i = 0; i < 5; i++)
             {
                 tlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
             }
+            //Lisame stiilid 4 reale (Добавляем стили для 4 строк)
             for (int i = 0; i < 4; i++)
             {
                 tlp.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
@@ -122,7 +121,7 @@ namespace Elemendid_vormis_TARpv23
             //Time Left - lbl
             time = new Label();
             time.AutoSize = true;
-            time.Text = "Time Left: 40 seconds";
+            time.Text = "Time Left: 40 sekundit";
             time.Font = new Font("Harlow Solid Italic", 18, FontStyle.Italic);
             time.TextAlign = ContentAlignment.MiddleCenter;
             time.Dock = DockStyle.Top;
@@ -180,6 +179,7 @@ namespace Elemendid_vormis_TARpv23
             divisionRight.Font = new Font("Arial", 18, FontStyle.Italic);
             divisionRight.TextAlign = ContentAlignment.MiddleCenter;
 
+            //"Võrdselt" lisamine Label vordub'i ja märkide lisamine tsükli abil
             //Добавление "равно" в Label vordub и знаков при помощи цикла
             for (int i = 0; i < 4; i++)
             {
@@ -203,7 +203,7 @@ namespace Elemendid_vormis_TARpv23
                 tlp.Controls.Add(signs, 3, i);
             }
 
-            // Добавляем метки для чисел
+            //Lisame numbrimärgid (Добавляем метки для чисел)
             tlp.Controls.Add(plusLeftLabel, 0, 0);
             tlp.Controls.Add(plusRightLabel, 2, 0);
 
@@ -310,16 +310,16 @@ namespace Elemendid_vormis_TARpv23
 
         private void Loobuma_Click(object? sender, EventArgs e)
         {
-            // Останавливаем таймер
+            //Peatame taimeri (Останавливаем таймер)
             timer.Stop();
 
-            // Показать правильные ответы
+            // Näita õigeid vastuseid (Показать правильные ответы)
             sum.Value = addend1 + addend2;
             difference.Value = minuend - subtrahend;
             product.Value = multiplicand * multiplier;
             quotient.Value = dividend / divisor;
 
-            // Показать сообщение
+            //Näita sõnumit (Показать сообщение)
             MessageBox.Show("Otsustasid alla anda! Järgmine kord veab.\n" +
                    $"Õiged vastused:\n" +
                    $"{addend1} + {addend2} = {addend1 + addend2}\n" +
@@ -328,24 +328,28 @@ namespace Elemendid_vormis_TARpv23
                    $"{dividend} / {divisor} = {dividend / divisor}");
         }
 
+        //Paneme paika uue aja 40 sekundit (Устанавливаем новое время 40 секунд)
         private void NelikümmendMenuItem_Click(object? sender, EventArgs e)
         {
             NewTime(40);
             timeLeft = 40;
             time.Text = "Time Left: 40 seconds";
         }
+        //Paneme paika uue aja 30 sekundit (Устанавливаем новое время 30 секунд)
         private void KolmkümmendMenuItem_Click(object? sender, EventArgs e)
         {
             NewTime(30);
             timeLeft = 30;
             time.Text = "Time Left: 30 seconds";
         }
+        //Paneme paika uue aja 20 sekundit (Устанавливаем новое время 20 секунд)
         private void KakskümmendMenuItem_Click(object? sender, EventArgs e)
         {
             NewTime(20);
             timeLeft = 20;
             time.Text = "Time Left: 20 seconds";
         }
+        //Paneme paika uue aja 60 sekundit (Устанавливаем новое время 60 секунд)
         private void MinutMenuItem_Click(object? sender, EventArgs e)
         {
             NewTime(60);
@@ -362,9 +366,12 @@ namespace Elemendid_vormis_TARpv23
             start.Enabled = true;
         }
 
+        //Genereerime juhusliku indeksi, et valida nimekirjast värvi
+        //Генерируем случайный индекс для выбора цвета из списка
         private void Taustavarv_Click(object? sender, EventArgs e)
         {
             int randomIndex = random.Next(tausta_varv.Count);
+            //Paigaldame taustavärvi (Устанавливаем цвет фона)
             this.BackColor = Color.FromName(tausta_varv[randomIndex]);
         }
 
@@ -372,45 +379,45 @@ namespace Elemendid_vormis_TARpv23
         {
             Random random = new Random();
 
-            // Генерируем случайные цвета для элементов
             tlp.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
 
-            // Меняем цвета кнопок
+            //Vahetame nuppude värve (Меняем цвета кнопок)
             start.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             close.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             alusta_otsast.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             varv.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
 
-            // Меняем цвет текста меток
+            //Muudame siltide teksti värvi (Меняем цвет текста меток)
             quotient.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             product.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             difference.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
             sum.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
         }
 
+        //Heidame väärtuse maha, et alustada otsast peale (Сбрасываем значение, чтобы начать сначала)
         private void Alusta_otsast_Click(object? sender, EventArgs e)
         {
-            // Сбрасываем задание на сложение
+            //Viskame liitmisülesande maha (Сбрасываем задание на сложение)
             sum.Value = 0;
             plusLeftLabel.Text = "?";
             plusRightLabel.Text = "?";
 
-            // Сбрасываем задание на вычитание
+            //Heidame mahaarvamisülesande (Сбрасываем задание на вычитание)
             difference.Value = 0;
             minusLeftLabel.Text = "?";
             minusRightLabel.Text = "?";
 
-            // Сбрасываем задание на умножение
+            //Viskame ülesande korrutamisele (Сбрасываем задание на умножение)
             product.Value = 0;
             multiplicationLeft.Text = "?";
             multiplicationRight.Text = "?";
 
-            // Сбрасываем задание на деление
+            //Heidame jagamisülesande (Сбрасываем задание на деление)
             quotient.Value = 0;
             divisionLeft.Text = "?";
             divisionRight.Text = "?";
 
-            // Останавливаем таймер и сбрасываем время
+            //Peatame taimeri ja viskame aja maha (Останавливаем таймер и сбрасываем время)
             timer.Stop();
             start.Enabled = true;
         }
@@ -420,8 +427,7 @@ namespace Elemendid_vormis_TARpv23
             if (CheckTheAnswer())
             {
                 timer.Stop();
-                MessageBox.Show("Vastasite kõigile küsimustele õigesti!",
-                                "Palju õnne! :)");
+                MessageBox.Show("Vastasite kõigile küsimustele õigesti!");
                 start.Enabled = true;
             }
             else if (timeLeft > 0)
@@ -498,38 +504,33 @@ namespace Elemendid_vormis_TARpv23
         // Start the quiz by filling in all of the problem 
         public void StartTheQuiz()
         {
-            // Fill in the addition problem.
-            // Generate two random numbers to add.
-            // Store the values in the variables 'addend1' and 'addend2'.
+            //Genereerime liitmiseks kaks juhuslikku numbrit.
+            //Генерируем два случайных числа для сложения.
             addend1 = random.Next(51);
             addend2 = random.Next(51);
 
-            // Convert the two randomly generated numbers
-            // into strings so that they can be displayed
-            // in the label controls.
+            //Muudame kaks juhuslikult genereeritud numbrit ridadeks, et neid oleks võimalik kuvada
+            // Преобразуем два случайно сгенерированных числа в строки, чтобы их можно было отобразить
             plusLeftLabel.Text = addend1.ToString();
             plusRightLabel.Text = addend2.ToString();
 
-            // 'sum' is the name of the NumericUpDown control.
-            // This step makes sure its value is zero before
-            // adding any values to it.
             sum.Value = 0;
 
-            // Fill in the subtraction problem.
+            //Täidame lahutusülesande. (Заполняем задачу вычитания.)
             minuend = random.Next(1, 101);
             subtrahend = random.Next(1, minuend);
             minusLeftLabel.Text = minuend.ToString();
             minusRightLabel.Text = subtrahend.ToString();
             difference.Value = 0;
 
-            // Fill in the multiplication problem.
+            //Täidame korrutusülesande. (Заполняем задачу умножения.)
             multiplicand = random.Next(2, 11);
             multiplier = random.Next(2, 11);
             multiplicationLeft.Text = multiplicand.ToString();
             multiplicationRight.Text = multiplier.ToString();
             product.Value = 0;
 
-            // Fill in the division problem.
+            //Täidame jagamisülesande. (Заполняем задачу деления.)
             divisor = random.Next(2, 11);
             int temporaryQuotient = random.Next(2, 11);
             dividend = divisor * temporaryQuotient;
@@ -537,19 +538,20 @@ namespace Elemendid_vormis_TARpv23
             divisionRight.Text = divisor.ToString();
             quotient.Value = 0;
 
-            // Start the timer.
             timer.Start();
         }
-        // Check the answers to see if the user got everything right.
+        //Meetod vastuste kontrollimiseks (Метод для проверки ответов)
         private bool CheckTheAnswer()
         {
+            //Kontrollime, kas kõik vastused kattuvad õigete väärtustega
+            //Проверяем, совпадают ли все ответы с правильными значениями
             if ((addend1 + addend2 == sum.Value)
                 && (minuend - subtrahend == difference.Value)
                 && (multiplicand * multiplier == product.Value)
                 && (dividend / divisor == quotient.Value))
-                return true;
+                return true; //Tagastame, kui kõik vastused on õiged (Возвращаем, если все ответы правильные)
             else
-                return false;
+                return false; //Tagastame, kui on valed vastused (Возвращаем, если есть неправильные ответы)
         }
     }
 }
