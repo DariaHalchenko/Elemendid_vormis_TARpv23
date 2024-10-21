@@ -58,7 +58,7 @@ namespace Elemendid_vormis_TARpv23
             table = new TableLayoutPanel();
             table.Dock = DockStyle.Fill;
             table.BackColor = Color.White;
-            table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset; 
+            table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
             table.ColumnCount = 4;
             table.RowCount = 4;
 
@@ -173,7 +173,7 @@ namespace Elemendid_vormis_TARpv23
             //Ikooni kuvamise taimeri initsialiseerimine
             // Инициализация таймера отображения иконок
             timer2 = new System.Windows.Forms.Timer();
-            timer2.Interval = 10000; 
+            timer2.Interval = 10000;
             timer2.Tick += Timer2_Tick; ;
 
             // Loome MenuStrip 
@@ -187,13 +187,10 @@ namespace Elemendid_vormis_TARpv23
             ToolStripMenuItem meessoostMenuItem = new ToolStripMenuItem("Meessoost", null, new EventHandler(MeessoostMenuItem_Click));
             ToolStripMenuItem tutorialMenuItem = new ToolStripMenuItem("Tutorial", null, new EventHandler(TutorialMenuItem_Click));
 
-            ToolStripMenuItem taustal = new ToolStripMenuItem("Taustal");
-            ToolStripMenuItem salmonMenuItem = new ToolStripMenuItem("Salmon", null, new EventHandler(SalmonMenuItem_Click));
-            ToolStripMenuItem springGreenMenuItem = new ToolStripMenuItem("SpringGreen", null, new EventHandler(SpringGreenMenuItem_Click));
-            ToolStripMenuItem indianRedGreenMenuItem = new ToolStripMenuItem("IndianRed", null, new EventHandler(IndianRedMenuItem_Click));
-            ToolStripMenuItem crimsonMenuItem = new ToolStripMenuItem("Crimson", null, new EventHandler(CrimsonMenuItem_Click));
-            ToolStripMenuItem orchidMenuItem = new ToolStripMenuItem("SpringGreen", null, new EventHandler(OrchidMenuItem_Click));
-
+            ToolStripMenuItem suurus = new ToolStripMenuItem("Suurus");
+            ToolStripMenuItem taissuuruses = new ToolStripMenuItem("Täissuuruses", null, new EventHandler(TaissuurusesMenuItem_Click));
+            ToolStripMenuItem vaike_suurus = new ToolStripMenuItem("Väike suurus", null, new EventHandler(VaikesuurusMenuItem_Click));
+            
             //Alammenüü lisamine (Добавление подменю)
             font.DropDownItems.Add(arialMenuItem);
             font.DropDownItems.Add(wingdingsMenuItem);
@@ -202,15 +199,13 @@ namespace Elemendid_vormis_TARpv23
             sugu.DropDownItems.Add(meessoostMenuItem);
             sugu.DropDownItems.Add(tutorialMenuItem);
 
-            taustal.DropDownItems.Add(salmonMenuItem);
-            taustal.DropDownItems.Add(springGreenMenuItem);
-            taustal.DropDownItems.Add(indianRedGreenMenuItem);
-            taustal.DropDownItems.Add(crimsonMenuItem);
-            taustal.DropDownItems.Add(orchidMenuItem);
+            suurus.DropDownItems.Add(taissuuruses);
+            suurus.DropDownItems.Add(vaike_suurus);
+            
 
             ms.Items.Add(font);
             ms.Items.Add(sugu);
-            ms.Items.Add(taustal);
+            ms.Items.Add(suurus);
             this.MainMenuStrip = ms;
             this.Controls.Add(ms);
 
@@ -227,7 +222,7 @@ namespace Elemendid_vormis_TARpv23
             {
                 if (control is Label iconLabel)
                 {
-                    iconLabel.ForeColor = iconLabel.BackColor; 
+                    iconLabel.ForeColor = iconLabel.BackColor;
                 }
             }
         }
@@ -246,26 +241,26 @@ namespace Elemendid_vormis_TARpv23
             timer2.Start();
         }
 
-        private void SalmonMenuItem_Click(object? sender, EventArgs e)
+        private void TaissuurusesMenuItem_Click(object? sender, EventArgs e)
         {
-            this.BackColor = Color.Salmon;
+            Uus_teksti_suurus(48); 
         }
 
-        private void SpringGreenMenuItem_Click(object? sender, EventArgs e)
+        private void VaikesuurusMenuItem_Click(object? sender, EventArgs e)
         {
-            this.BackColor = Color.SpringGreen;
+            Uus_teksti_suurus(20); 
         }
-        private void IndianRedMenuItem_Click(object? sender, EventArgs e)
+
+        private void Uus_teksti_suurus(float size)
         {
-            this.BackColor = Color.IndianRed;
-        }
-        private void CrimsonMenuItem_Click(object? sender, EventArgs e)
-        {
-            this.BackColor = Color.Crimson;
-        }
-        private void OrchidMenuItem_Click(object? sender, EventArgs e)
-        {
-            this.BackColor = Color.Orchid;
+            foreach (Control control in table.Controls)
+            {
+                if (control is Label iconLabel)
+                {
+                    //määrata uus suurus ja stiil (bold) (устанавливаем новый размер и стиль (жирный))
+                    iconLabel.Font = new Font(iconLabel.Font.FontFamily, size, FontStyle.Bold);
+                }
+            }
         }
 
         //kutsume meetodi välja - mees (вызываем метод - mees)
@@ -467,4 +462,4 @@ namespace Elemendid_vormis_TARpv23
             }
         }
     }
-}
+} 
